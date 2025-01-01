@@ -30,17 +30,22 @@
       <td id="c11" class="container">Métodos de pago y guardar pedido</td>
     </tr>
   </table>
-  <div id="asadoInputs" style="display: none; margin-top: 10px;">
-    <label for="gramosInput">Gramos:</label>
-    <input
-      type="number"
-      id="gramosInput"
-      placeholder="Ingrese gramos"
-      min="1"
-      style="margin-right: 10px;"
-    />
-    <button id="addAsadoButton">Agregar</button>
+  <div id="asadoModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Seleccionar Gramos</h2>
+      <label for="gramosInput">Gramos:</label>
+      <input
+        type="number"
+        id="gramosInput"
+        placeholder="Ingrese gramos"
+        min="1"
+        style="margin-right: 10px;"
+      />
+      <button id="addAsadoButton">Agregar</button>
+    </div>
   </div>
+  
 </body>
 
 </html>

@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let tasas = {}; // Objeto para almacenar las tasas dinámicas
   let productoAsadoSeleccionado = null; // Producto actual de tipo Asados
 
+  // Modal
+  const asadoModal = document.querySelector("#asadoModal");
+  const closeModal = document.querySelector("#closeModal");
+  const addAsadoButton = document.querySelector("#addAsadoButton");
+
   // Función para cargar las tasas desde la base de datos
   function cargarTasas() {
     fetch("php/view/tasas.php")
@@ -32,24 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target.tagName === "BUTTON") {
       const tipoProductoId = event.target.dataset.id; // Aseguramos que `data-id` está presente
       loadContent(`php/view/productos.php?tipoProductoId=${tipoProductoId}`, "#c01");
-
-      // Mostrar/ocultar el div de asados según el tipo de producto
-      const asadoInputs = document.querySelector("#asadoInputs");
-      if (asadoInputs) {
-        if (tipoProductoId === "200") {
-          asadoInputs.style.display = "block";
-          productoAsadoSeleccionado = null; // Limpiar selección previa
-        } else {
-          asadoInputs.style.display = "none";
-        }
-      }
     }
   });
 
   // Manejar clics en los productos
   document.querySelector("#c01").addEventListener("click", (event) => {
     if (event.target.tagName === "BUTTON") {
-      const tipoProductoId = event.target.dataset.tipo; // Este atributo debe estar configurado en los botones
+      const tipoProductoId = event.target.dataset.tipo;
       const productoId = event.target.dataset.id;
       const productoNombre = event.target.innerText.split(" - ")[0];
       const precio = parseFloat(event.target.dataset.precio);
@@ -57,10 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (tipoProductoId === "200") {
         // Producto tipo Asados
         productoAsadoSeleccionado = { id: productoId, nombre: productoNombre, precio };
-        const gramosInput = document.querySelector("#gramosInput");
-        if (gramosInput) {
-          gramosInput.value = ""; // Limpiar input de gramos
-        }
+        asadoModal.style.display = "block"; // Mostrar el modal
+        document.querySelector("#gramosInput").value = ""; // Limpiar input de gramos
       } else {
         // Producto normal
         agregarProductoAlCarrito({ id: productoId, nombre: productoNombre, precio, cantidad: 1 });
@@ -69,37 +61,36 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Agregar producto tipo Asados al carrito
-  const addAsadoButton = document.querySelector("#addAsadoButton");
-  if (addAsadoButton) {
-    addAsadoButton.addEventListener("click", () => {
-      const gramosInput = document.querySelector("#gramosInput");
-      if (!gramosInput) {
-        console.error("No se encontró el input de gramos.");
-        return;
-      }
+  addAsadoButton.addEventListener("click", () => {
+    const gramosInput = document.querySelector("#gramosInput");
+    if (!gramosInput) {
+      console.error("No se encontró el input de gramos.");
+      return;
+    }
 
-      const gramos = parseInt(gramosInput.value, 10);
+    const gramos = parseInt(gramosInput.value, 10);
 
-      if (!productoAsadoSeleccionado || isNaN(gramos) || gramos <= 0) {
-        alert("Por favor, seleccione un producto y un valor válido en gramos.");
-        return;
-      }
+    if (!productoAsadoSeleccionado || isNaN(gramos) || gramos <= 0) {
+      alert("Por favor, seleccione un producto y un valor válido en gramos.");
+      return;
+    }
 
-      agregarProductoAlCarrito({
-        id: productoAsadoSeleccionado.id,
-        nombre: `${productoAsadoSeleccionado.nombre} (${gramos}g)`,
-        precio: (productoAsadoSeleccionado.precio * gramos) / 1000,
-        cantidad: gramos,
-      });
-
-      // Ocultar inputs después de agregar
-      const asadoInputs = document.querySelector("#asadoInputs");
-      if (asadoInputs) {
-        asadoInputs.style.display = "none";
-      }
-      productoAsadoSeleccionado = null;
+    agregarProductoAlCarrito({
+      id: productoAsadoSeleccionado.id,
+      nombre: `${productoAsadoSeleccionado.nombre} (${gramos}g)`,
+      precio: (productoAsadoSeleccionado.precio * gramos) / 1000,
+      cantidad: gramos,
     });
-  }
+
+    // Ocultar el modal después de agregar
+    asadoModal.style.display = "none";
+    productoAsadoSeleccionado = null;
+  });
+
+  // Cerrar el modal
+  closeModal.addEventListener("click", () => {
+    asadoModal.style.display = "none";
+  });
 
   // Agregar un producto al carrito
   function agregarProductoAlCarrito(producto) {
