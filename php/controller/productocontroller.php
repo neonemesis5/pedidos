@@ -27,18 +27,7 @@ class ProductoController extends BaseController {
      *
      * @param int $tipoProductoId ID del tipo de producto.
      */
-    // public function getProductosByTipoProducto($tipoProductoId) {
-    //     if (!$tipoProductoId) {
-    //         $this->errorResponse("El ID del tipo de producto es requerido.", 400);
-    //     }
 
-    //     try {
-    //         $productos = $this->productoModel->getProductosByTipoProducto($tipoProductoId);
-    //         $this->jsonResponse($productos);
-    //     } catch (Exception $e) {
-    //         $this->errorResponse($e->getMessage(), 500);
-    //     }
-    // }
     public function getProductosByTipoProducto($tipoProductoId) {
         if (!$tipoProductoId) {
             throw new Exception("El ID del tipo de producto es requerido.");
