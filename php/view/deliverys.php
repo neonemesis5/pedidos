@@ -16,13 +16,13 @@ try {
 
     // Mostrar los registros en una tabla
     echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Location ID</th><th>Pedido ID</th><th>Moneda ID</th><th>Fecha</th><th>Monto</th><th>Status</th></tr>";
+    echo "<tr><th>ID</th><th>Ubicación</th><th>Pedido</th><th>Moneda</th><th>Fecha</th><th>Monto</th><th>Status</th></tr>";
     foreach ($deliverys as $delivery) {
         echo "<tr>";
         echo "<td>{$delivery['id']}</td>";
-        echo "<td>{$delivery['location_id']}</td>";
-        echo "<td>{$delivery['pedido_id']}</td>";
-        echo "<td>{$delivery['moneda_id']}</td>";
+        echo "<td>{$delivery['location_nombre']}</td>";
+        echo "<td>{$delivery['pedido_nombre']} {$delivery['pedido_apellido']}</td>";
+        echo "<td>{$delivery['moneda_nombre']}</td>";
         echo "<td>{$delivery['created_at']}</td>";
         echo "<td>{$delivery['monto']}</td>";
         echo "<td>{$delivery['status']}</td>";
