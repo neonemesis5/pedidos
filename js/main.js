@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const totalDiv = document.createElement("div");
     totalDiv.innerHTML = `
-      <p>Total COP: ${totalCOP.toFixed(2)}</p>
+      <p>Total COP: ${totalCOP.toLocaleString("es-CO", { minimumFractionDigits: 2, maximumFractionDigits: 2}) }</p>
       <p>Total USD: ${tasas["USD_COP"] ? (totalCOP / tasas["USD_COP"]).toFixed(2) : "N/A"}</p>
       <p>Total VES: ${tasas["COP_BSS"] ? (totalCOP * tasas["COP_BSS"]).toFixed(2) : "N/A"}</p>
     `;

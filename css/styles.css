@@ -19,16 +19,20 @@ table {
     height: 350px;
   }
   /* Especificar anchos fijos para las columnas */
-  td:nth-child(1) {
-    width: 20%;
+  table td:nth-child(1) {
+    width: 25%;
     /* Columnas c[0][0] y c[1][0] */
   }
 
-  td:nth-child(2) {
-    width: 80%;
+  table td:nth-child(2) {
+    width: 75%;
     /* Columnas c[0][1] y c[1][1] */
   }
-
+  table td:nth-child(3) {
+    text-align: center; /* Centra el texto horizontalmente */
+    vertical-align: middle; /* Centra el texto verticalmente */
+  }
+  
   .product-item {
     display: inline-block;
     margin: 2px;
