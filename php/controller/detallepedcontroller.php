@@ -10,6 +10,24 @@ class DetallePedController extends BaseController {
         $this->detallePedModel = new DetallePedModel();
     }
 
+      /**
+     * Inserta un nuevo detalle de pedido.
+     */
+    public function addDetalle() {
+        try {
+            // Validar entrada
+            $data = json_decode(file_get_contents('php://input'), true);
+            if (!$data || !isset($data['pedido_id'], $data['producto_id'], $data['qty'], $data['status'])) {
+                $this->errorResponse("Datos incompletos para el detalle del pedido.", 400);
+            }
+
+            // Agregar el detalle
+            $this->detallePedModel->addDetalle($data);
+            $this->jsonResponse("Detalle agregado exitosamente.");
+        } catch (Exception $e) {
+            $this->errorResponse($e->getMessage(), 500);
+        }
+    }
     /**
      * Obtiene todos los detalles de pedido.
      */

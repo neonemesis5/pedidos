@@ -24,25 +24,51 @@ class DetallePedModel extends BaseModel {
         return $this->getWhere($this->table, ['pedido_id' => $pedido_id]);
     }
 
-    /**
-     * Inserta un nuevo detalle de pedido.
+  /**
+     * Inserta un nuevo detalle de pedido, validando las relaciones y actualizando el pedido.
      *
-     * @param array $data Datos del detalle de pedido (clave => valor).
+     * @param array $data Datos del detalle de pedido.
      * @return bool Resultado de la operación.
      */
     public function addDetalle($data) {
-        return $this->insert($this->table, $data);
+        // Validar existencia del pedido
+        $pedidoExists = $this->getById('pedido', $data['pedido_id']);
+        if (!$pedidoExists) {
+            throw new Exception("El pedido con ID {$data['pedido_id']} no existe.");
+        }
+
+        // Validar existencia del producto
+        $producto = $this->getById('producto', $data['producto_id']);
+        if (!$producto) {
+            throw new Exception("El producto con ID {$data['producto_id']} no existe.");
+        }
+
+        // Asignar precio del producto al detalle (si no se proporciona)
+        if (!isset($data['preciov'])) {
+            $data['preciov'] = $producto['preciov'];
+        }
+
+        // Insertar el detalle
+        $inserted = $this->insert($this->table, $data);
+        if ($inserted) {
+            // Actualizar el total del pedido
+            $this->updatePedidoTotal($data['pedido_id']);
+        }
+
+        return $inserted;
     }
 
     /**
-     * Actualiza un detalle de pedido existente.
+     * Actualiza el total del pedido basado en los detalles.
      *
-     * @param array $data Datos a actualizar (clave => valor).
-     * @param int $id ID del detalle de pedido a actualizar.
-     * @return bool Resultado de la operación.
+     * @param int $pedido_id ID del pedido.
      */
-    public function updateDetalle($data, $id) {
-        return $this->update($this->table, $data, $id);
+    private function updatePedidoTotal($pedido_id) {
+        $query = "SELECT SUM(qty * preciov) AS total FROM {$this->table} WHERE pedido_id = :pedido_id AND status = 'A'";
+        $result = $this->customQuery($query, ['pedido_id' => $pedido_id], false);
+
+        $total = $result['total'] ?? 0;
+        $this->update('pedido', ['total' => $total], $pedido_id);
     }
 
     /**
