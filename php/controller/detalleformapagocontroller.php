@@ -11,7 +11,7 @@ class DetalleFormaPagoController extends BaseController {
     }
 
     /**
-     * Obtiene todos los detalles de forma de pago.
+     * Obtiene todos los detalles de forma de pago con información asociada.
      */
     public function getAllDetallesFormaPago() {
         try {
@@ -23,7 +23,7 @@ class DetalleFormaPagoController extends BaseController {
     }
 
     /**
-     * Obtiene detalles de forma de pago por pedido ID.
+     * Obtiene detalles de forma de pago para un pedido específico con información asociada.
      *
      * @param int $pedido_id ID del pedido.
      */
@@ -35,6 +35,24 @@ class DetalleFormaPagoController extends BaseController {
         try {
             $detalles = $this->detalleFormaPagoModel->getDetallesByPedidoId($pedido_id);
             $this->jsonResponse($detalles);
+        } catch (Exception $e) {
+            $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Inserta un nuevo detalle de forma de pago.
+     */
+    public function addDetalleFormaPago() {
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+
+            if (!$data || !isset($data['pedido_id'], $data['formapago_id'], $data['moneda_id'], $data['monto'], $data['status'])) {
+                $this->errorResponse("Datos incompletos para el detalle de forma de pago.", 400);
+            }
+
+            $this->detalleFormaPagoModel->addDetalleFormaPago($data);
+            $this->jsonResponse("Detalle de forma de pago agregado exitosamente.");
         } catch (Exception $e) {
             $this->errorResponse($e->getMessage(), 500);
         }

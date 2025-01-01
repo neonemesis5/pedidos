@@ -15,23 +15,20 @@ if (!$pedido_id) {
 $detalleFormaPagoController = new DetalleFormaPagoController();
 
 try {
-    // Obtener los detalles de forma de pago
     ob_start();
     $detalleFormaPagoController->getDetallesByPedidoId($pedido_id);
     $response = ob_get_clean();
 
-    // Decodificar la respuesta JSON
     $detalles = json_decode($response, true);
 
-    // Mostrar los detalles en una tabla
     echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Forma Pago ID</th><th>Moneda ID</th><th>Pedido ID</th><th>Fecha</th><th>Monto</th><th>Nro Bauche</th><th>Status</th></tr>";
+    echo "<tr><th>ID</th><th>Pedido</th><th>Forma Pago</th><th>Moneda</th><th>Fecha</th><th>Monto</th><th>Bauche</th><th>Status</th></tr>";
     foreach ($detalles as $detalle) {
         echo "<tr>";
         echo "<td>{$detalle['id']}</td>";
-        echo "<td>{$detalle['formapago_id']}</td>";
-        echo "<td>{$detalle['moneda_id']}</td>";
         echo "<td>{$detalle['pedido_id']}</td>";
+        echo "<td>{$detalle['formapago_nombre']}</td>";
+        echo "<td>{$detalle['moneda_nombre']}</td>";
         echo "<td>{$detalle['fecha']}</td>";
         echo "<td>{$detalle['monto']}</td>";
         echo "<td>{$detalle['nrobauche']}</td>";
