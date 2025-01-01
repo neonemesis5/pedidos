@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><input type="checkbox" data-id="${producto.id}"></td>
+        <td><input type="checkbox" class="delete-checkbox" data-id="${producto.id}"></td>
         <td>${producto.nombre}</td>
         <td>${producto.cantidad}</td>
         <td>${producto.precio.toFixed(2)} COP</td>
@@ -159,6 +159,19 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     tabla.appendChild(totalDiv);
   }
+
+  // Eliminar productos seleccionados cuando se marca el checkbox
+  document.querySelector("#c10").addEventListener("change", (event) => {
+    if (event.target.classList.contains("delete-checkbox")) {
+      const productoId = event.target.dataset.id;
+      const index = carrito.findIndex((item) => item.id === productoId);
+
+      if (index > -1) {
+        carrito.splice(index, 1); // Eliminar producto del carrito
+        renderizarCarrito(); // Volver a renderizar el carrito
+      }
+    }
+  });
 
   // Función para cargar contenido dinámico
   function loadContent(url, target) {
