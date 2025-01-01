@@ -21,8 +21,10 @@ try {
 
     // Generar botones para cada producto
     foreach ($productos as $producto) {
-        echo "<button class='product-button' data-id='{$producto['id']}'
-                data-precio='{$producto['preciov']}'>
+        echo "<button class='product-button' 
+                data-id='{$producto['id']}'
+                data-precio='{$producto['preciov']}'
+                data-tipo='{$tipoProductoId}'>
                 {$producto['nombre']} - [{$producto['preciov']} COP]
               </button>";
     }

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const carrito = []; // Array para almacenar los productos seleccionados
   let tasas = {}; // Objeto para almacenar las tasas dinámicas
+  let productoAsadoSeleccionado = null; // Producto actual de tipo Asados
 
   // Función para cargar las tasas desde la base de datos
   function cargarTasas() {
@@ -12,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then((data) => {
-        // Convertir las tasas en un objeto para fácil acceso
         data.forEach((tasa) => {
           tasas[tasa.nombre] = parseFloat(tasa.monto);
         });
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Error al cargar tasas:", error));
   }
 
-  // Cargar las tasas al inicio
+  // Cargar tasas al inicio
   cargarTasas();
 
   // Cargar tipos de productos en c[0][0]
@@ -30,28 +30,83 @@ document.addEventListener("DOMContentLoaded", () => {
   // Manejar clics en los botones de tipos de productos
   document.querySelector("#c00").addEventListener("click", (event) => {
     if (event.target.tagName === "BUTTON") {
-      const tipoProductoId = event.target.dataset.id;
+      const tipoProductoId = event.target.dataset.id; // Aseguramos que `data-id` está presente
       loadContent(`php/view/productos.php?tipoProductoId=${tipoProductoId}`, "#c01");
+
+      // Mostrar/ocultar el div de asados según el tipo de producto
+      const asadoInputs = document.querySelector("#asadoInputs");
+      if (asadoInputs) {
+        if (tipoProductoId === "200") {
+          asadoInputs.style.display = "block";
+          productoAsadoSeleccionado = null; // Limpiar selección previa
+        } else {
+          asadoInputs.style.display = "none";
+        }
+      }
     }
   });
 
   // Manejar clics en los productos
   document.querySelector("#c01").addEventListener("click", (event) => {
     if (event.target.tagName === "BUTTON") {
+      const tipoProductoId = event.target.dataset.tipo; // Este atributo debe estar configurado en los botones
       const productoId = event.target.dataset.id;
       const productoNombre = event.target.innerText.split(" - ")[0];
-      const precio = parseFloat(event.target.innerText.match(/\d+\.?\d*/)[0]);
+      const precio = parseFloat(event.target.dataset.precio);
 
-      agregarProductoAlCarrito({ id: productoId, nombre: productoNombre, precio, cantidad: 1 });
+      if (tipoProductoId === "200") {
+        // Producto tipo Asados
+        productoAsadoSeleccionado = { id: productoId, nombre: productoNombre, precio };
+        const gramosInput = document.querySelector("#gramosInput");
+        if (gramosInput) {
+          gramosInput.value = ""; // Limpiar input de gramos
+        }
+      } else {
+        // Producto normal
+        agregarProductoAlCarrito({ id: productoId, nombre: productoNombre, precio, cantidad: 1 });
+      }
     }
   });
+
+  // Agregar producto tipo Asados al carrito
+  const addAsadoButton = document.querySelector("#addAsadoButton");
+  if (addAsadoButton) {
+    addAsadoButton.addEventListener("click", () => {
+      const gramosInput = document.querySelector("#gramosInput");
+      if (!gramosInput) {
+        console.error("No se encontró el input de gramos.");
+        return;
+      }
+
+      const gramos = parseInt(gramosInput.value, 10);
+
+      if (!productoAsadoSeleccionado || isNaN(gramos) || gramos <= 0) {
+        alert("Por favor, seleccione un producto y un valor válido en gramos.");
+        return;
+      }
+
+      agregarProductoAlCarrito({
+        id: productoAsadoSeleccionado.id,
+        nombre: `${productoAsadoSeleccionado.nombre} (${gramos}g)`,
+        precio: (productoAsadoSeleccionado.precio * gramos) / 1000,
+        cantidad: gramos,
+      });
+
+      // Ocultar inputs después de agregar
+      const asadoInputs = document.querySelector("#asadoInputs");
+      if (asadoInputs) {
+        asadoInputs.style.display = "none";
+      }
+      productoAsadoSeleccionado = null;
+    });
+  }
 
   // Agregar un producto al carrito
   function agregarProductoAlCarrito(producto) {
     const existente = carrito.find((item) => item.id === producto.id);
 
     if (existente) {
-      existente.cantidad += 1; // Incrementar cantidad si ya existe
+      existente.cantidad += producto.cantidad; // Incrementar cantidad si ya existe
     } else {
       carrito.push(producto); // Agregar nuevo producto
     }
@@ -62,6 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Renderizar carrito en c[1][0]
   function renderizarCarrito() {
     const tabla = document.querySelector("#c10");
+    if (!tabla) {
+      console.error("No se encontró la tabla del carrito.");
+      return;
+    }
+
     tabla.innerHTML = ""; // Limpiar contenido
 
     if (carrito.length === 0) {
@@ -69,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Crear tabla
     const table = document.createElement("table");
     table.innerHTML = `
       <tr>
@@ -91,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <td><input type="checkbox" data-id="${producto.id}"></td>
         <td>${producto.nombre}</td>
-        <td><input type="number" value="${producto.cantidad}" data-id="${producto.id}" min="1"></td>
+        <td>${producto.cantidad}</td>
         <td>${producto.precio.toFixed(2)} COP</td>
         <td>${total.toFixed(2)} COP</td>
       `;
@@ -101,43 +160,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     tabla.appendChild(table);
 
-    // Calcular totales en otras monedas
     const totalDiv = document.createElement("div");
-    const totalUSD = tasas["USD_COP"] ? (totalCOP / tasas["USD_COP"]).toFixed(2) : "N/A";
-    const totalVES = tasas["COP_BSS"] ? (totalCOP * tasas["COP_BSS"]).toFixed(2) : "N/A";
-
     totalDiv.innerHTML = `
       <p>Total COP: ${totalCOP.toFixed(2)}</p>
-      <p>Total USD: ${totalUSD}</p>
-      <p>Total VES: ${totalVES}</p>
+      <p>Total USD: ${tasas["USD_COP"] ? (totalCOP / tasas["USD_COP"]).toFixed(2) : "N/A"}</p>
+      <p>Total VES: ${tasas["COP_BSS"] ? (totalCOP * tasas["COP_BSS"]).toFixed(2) : "N/A"}</p>
     `;
     tabla.appendChild(totalDiv);
   }
 
-  // Eliminar productos seleccionados
-  document.querySelector("#c10").addEventListener("change", (event) => {
-    if (event.target.type === "checkbox") {
-      const productoId = event.target.dataset.id;
-      const index = carrito.findIndex((item) => item.id === productoId);
-
-      if (index > -1) {
-        carrito.splice(index, 1); // Eliminar producto
-        renderizarCarrito();
-      }
-    }
-
-    if (event.target.type === "number") {
-      const productoId = event.target.dataset.id;
-      const producto = carrito.find((item) => item.id === productoId);
-
-      if (producto) {
-        producto.cantidad = parseInt(event.target.value, 10);
-        renderizarCarrito();
-      }
-    }
-  });
-
-  // Función para cargar contenido dinámico en una posición específica
+  // Función para cargar contenido dinámico
   function loadContent(url, target) {
     fetch(url)
       .then((response) => {

@@ -4,27 +4,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sisema de Gestion de Pedidos</title>
+  <title>Sistema de Gestión de Pedidos</title>
   <script src="js/main.js" defer></script>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-  <h1>Sisema de Gestion de Pedidos</h1>
+  <h1>Sistema de Gestión de Pedidos</h1>
   <table>
     <tr>
       <!-- Tipos de productos -->
       <td id="c00" class="container row1">Cargando tipos de productos...</td>
       <!-- Productos según tipo -->
-      <td id="c01" class="container row1">Selecciona un tipo de producto</td>
+      <td id="c01" class="container row1">
+        Selecciona un tipo de producto
+       
+      </td>
     </tr>
     <tr>
       <!-- Tabla de productos seleccionados -->
-      <td id="c10" class="container"><p>El carrito está vacío.</p></td>
+      <td id="c10" class="container">
+        <p>El carrito está vacío.</p>
+      </td>
       <!-- Métodos de pago -->
       <td id="c11" class="container">Métodos de pago y guardar pedido</td>
     </tr>
   </table>
+  <div id="asadoInputs" style="display: none; margin-top: 10px;">
+    <label for="gramosInput">Gramos:</label>
+    <input
+      type="number"
+      id="gramosInput"
+      placeholder="Ingrese gramos"
+      min="1"
+      style="margin-right: 10px;"
+    />
+    <button id="addAsadoButton">Agregar</button>
+  </div>
 </body>
 
 </html>
