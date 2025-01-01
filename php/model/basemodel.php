@@ -37,6 +37,26 @@ class BaseModel {
         return $stmt->fetch();
     }
 
+    public function customQuery($query, $placeholders = [], $fetchAll = true) {
+        try {
+            // Preparar la consulta
+            $stmt = $this->db->getConnection()->prepare($query);
+    
+            // Ejecutar la consulta con los placeholders
+            $stmt->execute($placeholders);
+    
+            // Devolver resultados dependiendo de la consulta
+            if ($fetchAll) {
+                return $stmt->fetchAll(); // Para múltiples registros
+            } else {
+                return $stmt->fetch(); // Para un solo registro
+            }
+        } catch (PDOException $e) {
+            // Manejo de errores
+            throw new Exception("Error ejecutando consulta: " . $e->getMessage());
+        }
+    }
+    
     /**
      * Inserta un registro en una tabla.
      *
