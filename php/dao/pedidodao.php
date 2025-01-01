@@ -2,33 +2,24 @@
 
 require_once __DIR__ . '/BaseDAO.php';
 
-class TasaDAO extends BaseDAO {
-    private $table = 'tasa';
+class PedidoDAO extends BaseDAO {
+    private $table = 'pedido';
 
     /**
-     * Obtiene todas las tasas.
+     * Obtiene todos los pedidos.
      *
-     * @return array Lista de todas las tasas.
+     * @return array Lista de todos los pedidos.
      */
     public function getAll() {
         $sql = "SELECT * FROM {$this->table}";
         return $this->executeQuery($sql);
     }
-    public function getCurrentRates(){
-        $sql = " SELECT moneda_id1, moneda_id2, monto FROM  {$this->table} WHERE status = 'A'";
-        // $res=$this->executeQuery($sql);
-        // echo '<pre>';
-        // print_r($res);
-        // echo '</pre>';
-        // die;
-        return $this->executeQuery($sql);
-    }
 
     /**
-     * Obtiene una tasa por su ID.
+     * Obtiene un pedido por su ID.
      *
-     * @param int $id ID de la tasa.
-     * @return array|false Tasa encontrada o false si no existe.
+     * @param int $id ID del pedido.
+     * @return array|false Pedido encontrado o false si no existe.
      */
     public function getById($id) {
         $sql = "SELECT * FROM {$this->table} WHERE id = :id";
@@ -37,9 +28,9 @@ class TasaDAO extends BaseDAO {
     }
 
     /**
-     * Inserta una nueva tasa.
+     * Inserta un nuevo pedido.
      *
-     * @param array $data Datos de la tasa.
+     * @param array $data Datos del pedido.
      * @return bool Resultado de la operación.
      */
     public function insert($data) {
@@ -50,10 +41,10 @@ class TasaDAO extends BaseDAO {
     }
 
     /**
-     * Actualiza una tasa existente.
+     * Actualiza un pedido existente.
      *
      * @param array $data Datos a actualizar.
-     * @param int $id ID de la tasa.
+     * @param int $id ID del pedido.
      * @return bool Resultado de la operación.
      */
     public function update($data, $id) {
@@ -64,9 +55,9 @@ class TasaDAO extends BaseDAO {
     }
 
     /**
-     * Elimina una tasa por su ID.
+     * Elimina un pedido por su ID.
      *
-     * @param int $id ID de la tasa.
+     * @param int $id ID del pedido.
      * @return bool Resultado de la operación.
      */
     public function delete($id) {
