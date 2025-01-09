@@ -47,18 +47,7 @@ class PedidoController extends BaseController {
     /**
      * Inserta un nuevo pedido.
      */
-    // public function addPedido($data) {
-    //     try {
-    //         $result = $this->pedidoModel->addPedido($data);
-    //         if ($result) {
-    //             $this->jsonResponse("Pedido creado exitosamente.", 201);
-    //         } else {
-    //             $this->errorResponse("Error al crear el pedido.", 500);
-    //         }
-    //     } catch (Exception $e) {
-    //         $this->errorResponse($e->getMessage(), 500);
-    //     }
-    // }
+   
     public function addPedido($data) {
         try {
             $pedidoId = $this->pedidoModel->addPedido($data);
@@ -109,4 +98,13 @@ class PedidoController extends BaseController {
             $this->errorResponse($e->getMessage(), 500);
         }
     }
+    public function getLastPedido() {
+        try {
+            $result = $this->pedidoModel->getLastPedido();
+            return $result ? $result[0] : null; // Retornar solo el primer resultado
+        } catch (Exception $e) {
+            throw new Exception("Error al obtener el último pedido: " . $e->getMessage());
+        }
+    }
+    
 }

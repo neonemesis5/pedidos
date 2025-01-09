@@ -30,6 +30,34 @@ document.addEventListener("DOMContentLoaded", () => {
   // Cargar tasas al inicio
   cargarTasas();
 
+
+  function cargarUltimoPedido() {
+    fetch("php/view/getlastpedido.php")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al obtener el último pedido.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          const pedidoNroElement = document.querySelector("#pedidoNro");
+          pedidoNroElement.textContent = data.id > 0 ? data.id : "Sin pedidos"; // Mostrar el ID o "Sin pedidos"
+        } else {
+          throw new Error(data.message || "Error desconocido.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al cargar el último pedido:", error);
+        const pedidoNroElement = document.querySelector("#pedidoNro");
+        pedidoNroElement.textContent = "Error";
+      });
+  }
+
+  // Cargar el último pedido al inicio
+  cargarUltimoPedido();
+
+
   // Cargar tipos de productos en c[0][0]
   loadContent("php/view/tiposproductos.php", "#c00");
 

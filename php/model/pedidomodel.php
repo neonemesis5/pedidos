@@ -79,4 +79,7 @@ class PedidoModel extends BaseModel {
     public function deletePedido($id) {
         return $this->delete($this->table, $id);
     }
+    public function getLastPedido(){
+        return $this->customQuery('select id from pedido order by id desc limit ?',[1]);
+    }
 }
