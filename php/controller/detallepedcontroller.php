@@ -13,21 +13,29 @@ class DetallePedController extends BaseController {
       /**
      * Inserta un nuevo detalle de pedido.
      */
-    public function addDetalle() {
-        try {
-            // Validar entrada
-            $data = json_decode(file_get_contents('php://input'), true);
-            if (!$data || !isset($data['pedido_id'], $data['producto_id'], $data['qty'], $data['status'])) {
-                $this->errorResponse("Datos incompletos para el detalle del pedido.", 400);
-            }
+    // public function addDetalle() {
+    //     try {
+    //         // Validar entrada
+    //         $data = json_decode(file_get_contents('php://input'), true);
+    //         if (!$data || !isset($data['pedido_id'], $data['producto_id'], $data['qty'], $data['status'])) {
+    //             $this->errorResponse("Datos incompletos para el detalle del pedido.", 400);
+    //         }
 
-            // Agregar el detalle
-            $this->detallePedModel->addDetalle($data);
-            $this->jsonResponse("Detalle agregado exitosamente.");
+    //         // Agregar el detalle
+    //         $this->detallePedModel->addDetalle($data);
+    //         $this->jsonResponse("Detalle agregado exitosamente.");
+    //     } catch (Exception $e) {
+    //         $this->errorResponse($e->getMessage(), 500);
+    //     }
+    // }
+    public function addDetalle($data) {
+        try {
+            return $this->detallePedModel->addDetalle($data);
         } catch (Exception $e) {
-            $this->errorResponse($e->getMessage(), 500);
+            throw new Exception("Error al guardar el detalle del pedido: " . $e->getMessage());
         }
     }
+    
     /**
      * Obtiene todos los detalles de pedido.
      */

@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const asadoModal = document.querySelector("#asadoModal");
   const closeModal = document.querySelector("#closeModal");
   const addAsadoButton = document.querySelector("#addAsadoButton");
+  const saveOrderButton = document.querySelector("#saveOrder"); // Botón de guardar pedido
 
   // Función para cargar las tasas desde la base de datos
   function cargarTasas() {
@@ -153,9 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const totalDiv = document.createElement("div");
     totalDiv.innerHTML = `
-      <p>Total COP: ${totalCOP.toLocaleString("es-CO", { minimumFractionDigits: 2, maximumFractionDigits: 2}) }</p>
-      <p>Total USD: ${tasas["USD_COP"] ? (totalCOP / tasas["USD_COP"]).toFixed(2) : "N/A"}</p>
-      <p>Total VES: ${tasas["COP_BSS"] ? (totalCOP * tasas["COP_BSS"]).toFixed(2) : "N/A"}</p>
+      <p>Total COP: ${totalCOP.toFixed(2)}</p>
     `;
     tabla.appendChild(totalDiv);
   }
@@ -172,6 +171,55 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+
+  // Guardar pedido
+  saveOrderButton.addEventListener("click", () => {
+    if (carrito.length === 0) {
+        alert("El carrito está vacío. No se puede guardar el pedido.");
+        return;
+    }
+
+    const cliente = {
+        nombre: "Cliente", // Sustituir por valores reales
+        apellido: "Ejemplo",
+    };
+
+    const data = {
+        cliente,
+        carrito,
+        total: carrito.reduce((sum, item) => sum + item.cantidad * item.precio, 0),
+    };
+
+    fetch("php/view/guardar_pedido.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error al guardar el pedido.");
+            }
+            return response.json();
+        })
+        .then((result) => {
+            if (result.success) {
+                alert(`Pedido guardado exitosamente. ID del pedido: ${result.pedido_id}`);
+                carrito.length = 0; // Limpiar carrito
+                renderizarCarrito();
+            } else {
+                alert("Error al guardar el pedido: " + result.message);
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            alert("Hubo un error al procesar la solicitud: " + error.message);
+        });
+});
+
+  
+  
 
   // Función para cargar contenido dinámico
   function loadContent(url, target) {

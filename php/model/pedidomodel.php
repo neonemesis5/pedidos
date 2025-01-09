@@ -30,9 +30,34 @@ class PedidoModel extends BaseModel {
      * @param array $data Datos del pedido (clave => valor).
      * @return bool Resultado de la operación.
      */
+    // public function addPedido($data) {
+    //     return $this->insert($this->table, $data);
+    // }
     public function addPedido($data) {
-        return $this->insert($this->table, $data);
+        $columns = implode(", ", array_keys($data));
+        $placeholders = ":" . implode(", :", array_keys($data));
+        $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placeholders)";
+    
+        try {
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $result = $stmt->execute($data);
+    
+            if ($result) {
+                $lastInsertId = $this->db->getConnection()->lastInsertId();
+    
+                // Log del ID insertado
+                file_put_contents("debug.log", "addPedido - ID insertado: $lastInsertId\n", FILE_APPEND);
+    
+                return $lastInsertId;
+            }
+    
+            return false;
+        } catch (PDOException $e) {
+            file_put_contents("debug.log", "addPedido - Error SQL: " . $e->getMessage() . "\n", FILE_APPEND);
+            throw new Exception("Error al insertar el pedido: " . $e->getMessage());
+        }
     }
+    
 
     /**
      * Actualiza un pedido existente.

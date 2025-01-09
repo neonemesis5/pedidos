@@ -47,19 +47,37 @@ class PedidoController extends BaseController {
     /**
      * Inserta un nuevo pedido.
      */
+    // public function addPedido($data) {
+    //     try {
+    //         $result = $this->pedidoModel->addPedido($data);
+    //         if ($result) {
+    //             $this->jsonResponse("Pedido creado exitosamente.", 201);
+    //         } else {
+    //             $this->errorResponse("Error al crear el pedido.", 500);
+    //         }
+    //     } catch (Exception $e) {
+    //         $this->errorResponse($e->getMessage(), 500);
+    //     }
+    // }
     public function addPedido($data) {
         try {
-            $result = $this->pedidoModel->addPedido($data);
-            if ($result) {
-                $this->jsonResponse("Pedido creado exitosamente.", 201);
+            $pedidoId = $this->pedidoModel->addPedido($data);
+    
+            // Log del ID generado
+            file_put_contents("debug.log", "addPedido - ID generado: $pedidoId\n", FILE_APPEND);
+    
+            if ($pedidoId) {
+                return $pedidoId; // Retorna el ID del pedido recién creado
             } else {
-                $this->errorResponse("Error al crear el pedido.", 500);
+                throw new Exception("Error al crear el pedido.");
             }
         } catch (Exception $e) {
-            $this->errorResponse($e->getMessage(), 500);
+            file_put_contents("debug.log", "addPedido - Error: " . $e->getMessage() . "\n", FILE_APPEND);
+            throw new Exception($e->getMessage());
         }
     }
-
+    
+    
     /**
      * Actualiza un pedido existente.
      */

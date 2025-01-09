@@ -1,0 +1,70 @@
+addPedido - ID insertado: 49
+addPedido - ID generado: 49
+Pedido ID generado: 49
+addPedido - ID insertado: 50
+addPedido - ID generado: 50
+Pedido ID generado: 50
+guardar_pedido - Detalle a insertar: Array
+(
+    [pedido_id] => 50
+    [producto_id] => 1400
+    [qty] => 4
+    [preciov] => 15000
+    [status] => A
+)
+
+addDetalle - Datos recibidos: Array
+(
+    [pedido_id] => 50
+    [producto_id] => 1400
+    [qty] => 4
+    [preciov] => 15000
+    [status] => A
+)
+
+addDetalle - Error SQL: SQLSTATE[HY093]: Invalid parameter number: :status
+Error: Error al guardar el detalle del pedido: Error al insertar detalle: SQLSTATE[HY093]: Invalid parameter number: :status
+addPedido - ID insertado: 51
+addPedido - ID generado: 51
+Pedido ID generado: 51
+guardar_pedido - Detalle a insertar: Array
+(
+    [pedido_id] => 51
+    [producto_id] => 1400
+    [qty] => 4
+    [preciov] => 15000
+    [status] => A
+)
+
+addDetalle - Datos recibidos: Array
+(
+    [pedido_id] => 51
+    [producto_id] => 1400
+    [qty] => 4
+    [preciov] => 15000
+    [status] => A
+)
+
+addDetalle - Error SQL: SQLSTATE[HY093]: Invalid parameter number: :status
+Error: Error al guardar el detalle del pedido: Error al insertar detalle: SQLSTATE[HY093]: Invalid parameter number: :status
+addPedido - ID insertado: 52
+addPedido - ID generado: 52
+Pedido ID generado: 52
+guardar_pedido--Detalle a insertar: Array
+(
+    [pedido_id] => 52
+    [producto_id] => 1400
+    [qty] => 3
+    [preciov] => 15000
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [pedido_id] => 52
+    [producto_id] => 1400
+    [qty] => 3
+    [preciov] => 15000
+    [status] => A
+)
+
