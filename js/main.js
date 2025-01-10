@@ -236,6 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(`Pedido guardado exitosamente. ID del pedido: ${result.pedido_id}`);
                 carrito.length = 0; // Limpiar carrito
                 renderizarCarrito();
+                window.location.href = `php/view/forma_pago.php?pedido_id=${result.pedido_id}`;
             } else {
                 alert("Error al guardar el pedido: " + result.message);
             }

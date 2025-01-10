@@ -9,7 +9,7 @@ try {
     if ($lastPedido) {
         echo json_encode(['success' => true, 'id' => intval($lastPedido['id'])+1]);
     } else {
-        echo json_encode(['success' => true, 'id' => 0]); // Si no hay pedidos, retornar ID 0
+        echo json_encode(['success' => true, 'id' => 1]); // Si no hay pedidos, retornar ID 0
     }
 } catch (Exception $e) {
     http_response_code(500);

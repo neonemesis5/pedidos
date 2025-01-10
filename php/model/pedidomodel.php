@@ -82,4 +82,7 @@ class PedidoModel extends BaseModel {
     public function getLastPedido(){
         return $this->customQuery('select id from pedido order by id desc limit ?',[1]);
     }
+    public function getTotalPedido($id){
+        return $this->customQuery('select total from pedido where id=?',[$id]);
+    }
 }

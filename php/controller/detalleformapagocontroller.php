@@ -42,19 +42,19 @@ class DetalleFormaPagoController extends BaseController {
 
     /**
      * Inserta un nuevo detalle de forma de pago.
+     * @param array $data Datos del detalle de forma de pago.
      */
-    public function addDetalleFormaPago() {
+    public function addDetalleFormaPago($data) {
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
-
-            if (!$data || !isset($data['pedido_id'], $data['formapago_id'], $data['moneda_id'], $data['monto'], $data['status'])) {
-                $this->errorResponse("Datos incompletos para el detalle de forma de pago.", 400);
+            // Validar que los datos requeridos estén presentes
+            if (!isset($data['pedido_id'], $data['formapago_id'], $data['moneda_id'], $data['monto'], $data['status'])) {
+                throw new Exception("Datos incompletos para el detalle de forma de pago.");
             }
 
+            // Insertar los datos utilizando el modelo
             $this->detalleFormaPagoModel->addDetalleFormaPago($data);
-            $this->jsonResponse("Detalle de forma de pago agregado exitosamente.");
         } catch (Exception $e) {
-            $this->errorResponse($e->getMessage(), 500);
+            throw new Exception("Error al agregar el detalle de forma de pago: " . $e->getMessage());
         }
     }
 }

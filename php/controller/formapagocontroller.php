@@ -13,15 +13,23 @@ class FormaPagoController extends BaseController {
     /**
      * Obtiene todas las formas de pago.
      */
-    public function getAllFormasPago() {
+    // public function getAllFormasPago() {
+    //     try {
+    //         $formasPago = $this->formaPagoModel->getAllFormasPago();
+    //         $this->jsonResponse($formasPago);
+    //     } catch (Exception $e) {
+    //         $this->errorResponse($e->getMessage(), 500);
+    //     }
+    // }
+
+    public function getAllFormasPagoArray() {
         try {
-            $formasPago = $this->formaPagoModel->getAllFormasPago();
-            $this->jsonResponse($formasPago);
+            return $this->formaPagoModel->getAllFormasPago();
         } catch (Exception $e) {
-            $this->errorResponse($e->getMessage(), 500);
+            throw new Exception("Error al obtener las formas de pago: " . $e->getMessage());
         }
     }
-
+    
     /**
      * Obtiene una forma de pago por su ID.
      *

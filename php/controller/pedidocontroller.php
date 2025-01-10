@@ -106,5 +106,14 @@ class PedidoController extends BaseController {
             throw new Exception("Error al obtener el último pedido: " . $e->getMessage());
         }
     }
+
+    public function getMontoTotalByID($idPedido) {
+        try {
+            $result = $this->pedidoModel->getTotalPedido($idPedido);
+            return $result ? $result[0]['total'] : null; // Accede específicamente al campo "total"
+        } catch (\Throwable $e) {
+            throw new Exception("Error al obtener el Monto Total del Pedido: " . $e->getMessage());
+        }
+    }
     
 }

@@ -30,6 +30,17 @@ class TasaController extends BaseController {
             $this->errorResponse($e->getMessage(), 500);
         }
     }
+    public function getCurrentRates2(){
+        try {
+            $res=$this->tasaModel->getCurrentRates();
+            $listCurrent=[];
+            foreach ($res as $key => $value) 
+                $listCurrent[$value['nombre']]=$value['monto'];
+            return $listCurrent;
+        } catch (Exception $e) {
+            $this->errorResponse($e->getMessage(), 500);
+        }
+    }
     /**
      * Obtiene una tasa por su ID.
      *
