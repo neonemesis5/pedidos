@@ -65,4 +65,16 @@ class DetallePedController extends BaseController {
             $this->errorResponse($e->getMessage(), 500);
         }
     }
+
+    public function getDetallePedido($idPedido){
+        try {
+            if(!empty($idPedido) && is_numeric($idPedido))
+            // var_dump($this->detallePedModel->getDetallePedido($idPedido));die;\
+        // var_dump($this->detallePedModel->getDetallePedido($idPedido));die;
+            return $this->detallePedModel->getDetallePedido($idPedido);
+        } catch (\Throwable $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+       
+    }
 }

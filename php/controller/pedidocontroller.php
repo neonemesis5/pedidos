@@ -115,5 +115,13 @@ class PedidoController extends BaseController {
             throw new Exception("Error al obtener el Monto Total del Pedido: " . $e->getMessage());
         }
     }
+    public function getListPedidos(){
+        try {
+            $result = $this->pedidoModel->getListPedidos();
+            return $result;
+        } catch (\Throwable $e) {
+            throw new Exception("Error al obtener listado de los ultimos Pedidos : " . $e->getMessage());
+        }
+    }
     
 }

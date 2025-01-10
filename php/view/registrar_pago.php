@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../controller/DetalleFormaPagoController.php';
 require_once __DIR__ . '/../controller/MonedaController.php';
-require_once __DIR__ . '/../controller/PedidoController.php'; // Asegúrate de tener este controlador cargado
+require_once __DIR__ . '/../controller/PedidoController.php';
 
 header("Content-Type: application/json");
 

@@ -30,33 +30,6 @@ class DetallePedModel extends BaseModel {
      * @param array $data Datos del detalle de pedido.
      * @return bool Resultado de la operación.
      */
-    // public function addDetalle($data) {
-    //     // Validar existencia del pedido
-    //     $pedidoExists = $this->getById('pedido', $data['pedido_id']);
-    //     if (!$pedidoExists) {
-    //         throw new Exception("El pedido con ID {$data['pedido_id']} no existe.");
-    //     }
-
-    //     // Validar existencia del producto
-    //     $producto = $this->getById('producto', $data['producto_id']);
-    //     if (!$producto) {
-    //         throw new Exception("El producto con ID {$data['producto_id']} no existe.");
-    //     }
-
-    //     // Asignar precio del producto al detalle (si no se proporciona)
-    //     if (!isset($data['preciov'])) {
-    //         $data['preciov'] = $producto['preciov'];
-    //     }
-
-    //     // Insertar el detalle
-    //     $inserted = $this->insert($this->table, $data);
-    //     if ($inserted) {
-    //         // Actualizar el total del pedido
-    //         $this->updatePedidoTotal($data['pedido_id']);
-    //     }
-
-    //     return $inserted;
-    // }
     public function addDetalle($data) {
         file_put_contents("debug.log", "addDetalle--Datos recibidos: " . print_r($data, true) . "\n", FILE_APPEND);
         $query = "INSERT INTO detalleped (pedido_id, producto_id, qty, preciov, status) 
@@ -70,10 +43,6 @@ class DetallePedModel extends BaseModel {
         }
     }
     
-    
-    
-    
-
     /**
      * Actualiza el total del pedido basado en los detalles.
      *
@@ -96,4 +65,14 @@ class DetallePedModel extends BaseModel {
     public function deleteDetalle($id) {
         return $this->delete($this->table, $id);
     }
+
+    public function getDetallePedido($idPedido){
+        $query = "SELECT pro.nombre, det.preciov, det.qty, det.status 
+                  FROM detalleped det 
+                  JOIN producto pro ON pro.id = det.producto_id 
+                  WHERE det.pedido_id = :id_Pedido";
+        $result = $this->customQuery($query, ['id_Pedido' => $idPedido]);
+        return $result;
+    }
+    
 }
