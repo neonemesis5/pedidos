@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../controller/DetalleFormaPagoController.php';
 require_once __DIR__ . '/../controller/MonedaController.php';
+require_once __DIR__ . '/../controller/PedidoController.php'; // Asegúrate de tener este controlador cargado
 
 header("Content-Type: application/json");
 
@@ -19,9 +20,14 @@ try {
     $pedidoId = intval($input['pedido_id']);
     $pagos = $input['pagos'];
 
+    $pendienteCobrar = isset($input['pendienteCobrar']) ? (bool) $input['pendienteCobrar'] : false;
+    $valeEmpleados = isset($input['valeEmpleados']) ? (bool) $input['valeEmpleados'] : false;
+    $organismos = isset($input['organismos']) ? (bool) $input['organismos'] : false;
+
     // Inicializar controladores
     $detalleFormaPagoController = new DetalleFormaPagoController();
     $monedaController = new MonedaController();
+    $pedidoController = new PedidoController();
 
     // Obtener todas las monedas y mapear nombres a IDs
     $monedas = $monedaController->getAllMonedas2();
@@ -32,7 +38,7 @@ try {
 
     // Registrar las monedas obtenidas en el debug.log
     file_put_contents('debug.log', "[" . date('Y-m-d H:i:s') . "] Mapeo de monedas: " . print_r($monedaMap, true) . PHP_EOL, FILE_APPEND);
-    
+
     // Procesar cada pago
     foreach ($pagos as $pago) {
         // Registrar el pago actual en el debug.log
@@ -51,7 +57,6 @@ try {
         if (!isset($monedaMap[$moneda])) {
             throw new Exception("Moneda no válida: $moneda.");
         }
-        // print_r([$moneda,$monedaMap,$monedaMap[$moneda]]);
         $monedaId = $monedaMap[$moneda];
 
         // Preparar datos para insertar en la tabla `detalle_formap`
@@ -61,7 +66,7 @@ try {
             'moneda_id' => $monedaId,
             'fecha' => date('Y-m-d H:i:s'),
             'monto' => $monto,
-            'status' => 'A' // 'A' para activo, puedes modificar esto según tu lógica
+            'status' => 'E' // 'A' para activo
         ];
 
         // Registrar el detalle que se va a insertar en el debug.log
@@ -71,9 +76,28 @@ try {
         $detalleFormaPagoController->addDetalleFormaPago($detalle);
     }
 
+    // Determinar el estado del pedido basado en las opciones seleccionadas
+    $nuevoEstado = null;
+
+    if ($pendienteCobrar) {
+        $nuevoEstado = 'P'; // Pendiente x Cobrar Cliente
+    } elseif ($valeEmpleados) {
+        $nuevoEstado = 'I'; // Vale Empleados
+    } elseif ($organismos) {
+        $nuevoEstado = 'O'; // Organismos
+    } elseif (!empty($pagos)) {
+        $nuevoEstado = 'C'; // Pago completo
+    }
+
+    // Actualizar el estado del pedido si se determina uno
+    if ($nuevoEstado) {
+        $pedidoController->updatePedido($pedidoId, ['status' => $nuevoEstado]);
+        file_put_contents('debug.log', "[" . date('Y-m-d H:i:s') . "] Estado del pedido actualizado a: $nuevoEstado para el pedido ID: $pedidoId" . PHP_EOL, FILE_APPEND);
+    }
+
     // Responder con éxito
     file_put_contents('debug.log', "[" . date('Y-m-d H:i:s') . "] Pagos registrados exitosamente." . PHP_EOL, FILE_APPEND);
-    echo json_encode(['success' => true, 'message' => 'Pagos registrados exitosamente.']);
+    echo json_encode(['success' => true, 'message' => 'Pagos registrados y estado del pedido actualizado exitosamente.']);
 } catch (Exception $e) {
     // Registrar el error en el debug.log
     file_put_contents('debug.log', "[" . date('Y-m-d H:i:s') . "] Error: " . $e->getMessage() . PHP_EOL, FILE_APPEND);

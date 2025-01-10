@@ -20,34 +20,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Carga las tasas desde el servidor
     let tasas = {};
-    function cargarTasas() {
-        fetch("tasas.php")
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Error al cargar las tasas de cambio.");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            data.forEach((tasa) => {
-              tasas[tasa.nombre] = parseFloat(tasa.monto);
+    fetch("tasas.php")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(tasa => {
+                tasas[tasa.nombre] = parseFloat(tasa.monto);
             });
             console.log("Tasas cargadas:", tasas);
-          })
-          .catch((error) => console.error("Error al cargar tasas:", error));
-      }
-    
-      // Cargar tasas al inicio
-      cargarTasas();
-    // fetch("php/view/tasas.php")
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         data.forEach(tasa => {
-    //             tasas[tasa.nombre] = parseFloat(tasa.monto);
-    //         });
-    //         console.log("Tasas cargadas:", tasas);
-    //     })
-    //     .catch(error => console.error("Error cargando tasas:", error));
+        })
+        .catch(error => console.error("Error cargando tasas:", error));
 
     // Recalcula totales
     function recalcularTotales() {
@@ -79,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const compraUSD = parseFloat(totalCompraUSD.textContent);
         const compraVES = parseFloat(totalCompraVES.textContent);
 
-        porPagarCOP.textContent = ((compraCOP - pagadoCOPValue).toFixed(2));
+        porPagarCOP.textContent = (compraCOP - pagadoCOPValue).toFixed(2);
         porPagarUSD.textContent = (compraUSD - pagadoUSDValue).toFixed(2);
         porPagarVES.textContent = (compraVES - pagadoVESValue).toFixed(2);
 
@@ -107,6 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 moneda: input.dataset.moneda,
                 monto: parseFloat(input.value) || 0,
             })),
+            pendienteCobrar: pendienteCobrar.checked,
+            valeEmpleados: valeEmpleados.checked,
+            organismos: organismos.checked,
         };
     
         console.log("Datos enviados:", data); // Verificar los datos que se están enviando
@@ -118,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
             .then(response => response.json())
             .then(result => {
+                // console.log(result);
                 if (result.success) {
                     alert("Pago registrado correctamente");
                     window.location.href = "../../index.html";
@@ -131,5 +116,4 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Hubo un error al procesar el pago.");
             });
     });
-    
 });

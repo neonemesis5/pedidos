@@ -74,9 +74,9 @@ class PedidoController extends BaseController {
         try {
             $result = $this->pedidoModel->updatePedido($data, $id);
             if ($result) {
-                $this->jsonResponse("Pedido actualizado exitosamente.");
+                return true;//$this->jsonResponse("Pedido actualizado exitosamente.");
             } else {
-                $this->errorResponse("Error al actualizar el pedido.", 500);
+                return false;//$this->errorResponse("Error al actualizar el pedido.", 500);
             }
         } catch (Exception $e) {
             $this->errorResponse($e->getMessage(), 500);
