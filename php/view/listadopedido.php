@@ -30,11 +30,11 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
             vertical-align: top;
         }
 
-        #c00 #col1{
+        #c00 {
             width: 60%;
         }
 
-        #c01 #col2{
+        #c01 {
             width: 40%;
         }
 
@@ -77,6 +77,21 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
             visibility: hidden;
         }
 
+        #realizarPagoButton {
+            display: none; /* Ocultar el botón por defecto */
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #realizarPagoButton:hover {
+            background-color: #218838;
+        }
+
         /* Sombrado al pasar el cursor por la fila */
         /* tr:hover {
             background-color: #f0f8ff;
@@ -89,7 +104,7 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
     <h1>Lista de Pedidos</h1>
     <table id="principal">
         <tr>
-            <td id="col1">Ultimos Pedidos</td>
+            <td id="col1">Últimos Pedidos</td>
             <td id="col2">Detalle del Pedido</td>
         </tr>
         <tr>
@@ -133,6 +148,8 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
                         <!-- Los detalles se cargarán aquí vía AJAX -->
                     </tbody>
                 </table>
+                <!-- Botón Realizar Pago -->
+                <a id="realizarPagoButton" href="#">Realizar Pago</a>
             </td>
         </tr>
         <tr>
@@ -141,5 +158,4 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
         </tr>
     </table>
 </body>
-
 </html>
