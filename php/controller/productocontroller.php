@@ -39,5 +39,14 @@ class ProductoController extends BaseController {
             throw new Exception("Error al obtener los productos: " . $e->getMessage());
         }
     }
-    
+    public function getProductosConUnidadPorTipo($tipoProductoId) {
+        if (!$tipoProductoId) {
+            throw new Exception("El ID del tipo de producto es requerido.");
+        }
+        try {
+            return $this->productoModel->getProductosConUnidadMedidaPorTipo($tipoProductoId);
+        } catch (Exception $e) {
+            throw new Exception("Error al obtener los productos con unidad de medida: " . $e->getMessage());
+        }
+    }
 }

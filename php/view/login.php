@@ -19,7 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Intentar el login
         $authController->login($username, $password);
-        header("Location: /pedidos/index.php"); // Redirigir al sistema principal
+        if( $_SESSION['rol_id'] === 1 )
+            header("Location: /pedidos/index.php"); // Redirigir al sistema principal
+        if( $_SESSION['rol_id'] === 3 )
+            header("Location: kardex.php"); // Redirigir al sistema principal
         exit;
     } catch (Exception $e) {
         $error = $e->getMessage();
