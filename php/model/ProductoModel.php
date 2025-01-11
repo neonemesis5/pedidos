@@ -67,7 +67,7 @@ class ProductoModel extends BaseModel {
     }
 
     public function getProductosConUnidadMedidaPorTipo($tipoProductoId) {
-        $sql = "SELECT pro.nombre AS producto, um.nombre AS unidad_medida
+        $sql = "SELECT pro.id,pro.nombre AS producto, um.nombre AS unidad_medida
                 FROM producto pro
                 JOIN unidades_medida um ON um.id = pro.umedida_id
                 WHERE pro.tipoproducto_id = :tipoproducto_id AND pro.status = 'A'";

@@ -2,7 +2,7 @@
 session_start();
 
 // Verificar sesión y rol del usuario
-if (!isset($_SESSION['user_id']) || $_SESSION['rol_id'] != 3) { // Cambia 2 al ID del rol específico
+if (!isset($_SESSION['user_id']) || $_SESSION['rol_id'] != 3) {
     header("Location: /pedidos/php/view/login.php");
     exit;
 }
@@ -72,7 +72,6 @@ if ($tipoSeleccionado) {
 
         .btn-logout {
             background-color: #dc3545;
-            /* Rojo */
             color: white;
             padding: 10px 15px;
             border-radius: 5px;
@@ -83,7 +82,6 @@ if ($tipoSeleccionado) {
 
         .btn-logout:hover {
             background-color: #c82333;
-            /* Rojo oscuro */
         }
 
         #header {
@@ -105,11 +103,67 @@ if ($tipoSeleccionado) {
             window.location.href = url; // Recargar la página con el tipo seleccionado
         }
         document.addEventListener("DOMContentLoaded", () => {
-            const logoutButton = document.getElementById("btnLogout");
+            const btnGuardar = document.getElementById("btnGuardar");
+            const ingresoCheckbox = document.getElementById("ingreso");
+            const salidaCheckbox = document.getElementById("salida");
 
-            logoutButton.addEventListener("click", () => {
-                // Redirige al archivo PHP encargado de cerrar la sesión
-                window.location.href = "/pedidos/php/view/logout.php";
+            btnGuardar.addEventListener("click", () => {
+                const rows = document.querySelectorAll("table tbody tr");
+                const productos = [];
+
+                rows.forEach((row) => {
+                    const productoId = row.dataset.productoId; // Captura el ID del producto
+                    const cantidadInput = row.cells[3]?.querySelector("input"); // Input en la cuarta celda
+
+                    if (productoId && cantidadInput && cantidadInput.value && cantidadInput.value > 0) {
+                        productos.push({
+                            producto_id: productoId, // ID del producto
+                            cantidad: parseFloat(cantidadInput.value), // Cantidad ingresada
+                        });
+                    }
+                });
+
+                if (productos.length === 0) {
+                    alert("Por favor, ingrese cantidades antes de guardar.");
+                    return;
+                }
+
+                // Determinar el tipo de operación (1000 para ingreso, 1001 para salida)
+                const tipoOperacion = ingresoCheckbox.checked ? 1000 : 1001;
+
+                // Crear el objeto de datos para enviar al backend
+                const data = {
+                    tipoProductoId: <?php echo $tipoSeleccionado ? $tipoSeleccionado : 'null'; ?>,
+                    tipoOperacion: tipoOperacion,
+                    productos: productos,
+                };
+
+                // Enviar los datos al backend con fetch
+                fetch("/pedidos/php/view/guardar_kardex.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Error al guardar los registros.");
+                        }
+                        return response.json();
+                    })
+                    .then((result) => {
+                        if (result.success) {
+                            alert("Registros guardados correctamente.");
+                            window.location.reload(); // Recargar la página
+                        } else {
+                            alert("Error al guardar registros: " + result.message);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("Hubo un error al guardar los registros.");
+                    });
             });
         });
     </script>
@@ -126,9 +180,18 @@ if ($tipoSeleccionado) {
                     <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
                 </td>
             </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <label>Tipo Operación:</label>
+                    <input type="checkbox" id="ingreso" checked />
+                    <label for="ingreso">Ingreso</label>
+                    <input type="checkbox" id="salida" />
+                    <label for="salida">Salida</label>
+                </td>
+            </tr>
         </table>
     </div>
-
 
     <table>
         <tr>
@@ -147,6 +210,7 @@ if ($tipoSeleccionado) {
                 <table>
                     <thead>
                         <tr>
+                            <th>Id Producto</th>
                             <th>Producto</th>
                             <th>Unidad de Medida</th>
                             <th>Cantidad</th>
@@ -155,7 +219,8 @@ if ($tipoSeleccionado) {
                     <tbody>
                         <?php if (!empty($productos)): ?>
                             <?php foreach ($productos as $producto): ?>
-                                <tr>
+                                <tr data-producto-id="<?php echo htmlspecialchars($producto['id']); ?>">
+                                    <td><?php echo htmlspecialchars($producto['id']); ?></td>
                                     <td><?php echo htmlspecialchars($producto['producto']); ?></td>
                                     <td><?php echo htmlspecialchars($producto['unidad_medida']); ?></td>
                                     <td><input type="number" step="0.01" min="0"></td>
@@ -163,12 +228,13 @@ if ($tipoSeleccionado) {
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="3">Selecciona un tipo de producto para ver los productos.</td>
+                                <td colspan="4">Selecciona un tipo de producto para ver los productos.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
+
                 </table>
-                <button>Guardar Registros</button>
+                <button id="btnGuardar">Guardar Registros</button>
             </td>
         </tr>
     </table>

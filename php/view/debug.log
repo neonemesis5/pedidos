@@ -1,0 +1,41 @@
+Datos recibidos en guardar_kardex.php: Array
+(
+    [tipoProductoId] => 300
+    [tipoOperacion] => 1000
+    [productos] => Array
+        (
+            [0] => Array
+                (
+                    [producto_id] => 1300
+                    [cantidad] => 200
+                )
+
+        )
+
+)
+Error al guardar registros: Error al crear el diario: Error ejecutando consulta: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "diario" violates foreign key constraint "tipooper_fk1"
+DETAIL:  Key (tipooper_id)=(2) is not present in table "tipooper".
+Datos recibidos en guardar_kardex.php: Array
+(
+    [tipoProductoId] => 300
+    [tipoOperacion] => 1000
+    [productos] => Array
+        (
+            [0] => Array
+                (
+                    [producto_id] => 1300
+                    [cantidad] => 200
+                )
+
+        )
+
+)
+Diario creado con ID: 6
+Datos de movimiento: Array
+(
+    [producto_id] => 1300
+    [diario_id] => 6
+    [qty] => 200
+    [observacion] => Registro desde Kardex
+    [status] => A
+)

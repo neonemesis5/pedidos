@@ -43,4 +43,12 @@ class DiarioController extends BaseController {
             $this->errorResponse($e->getMessage(), 500);
         }
     }
+    public function createDiario($data) {
+        try {
+            return $this->diarioModel->addDiario($data);
+        } catch (Exception $e) {
+            throw new Exception("Error al crear el diario: " . $e->getMessage());
+        }
+    }
+    
 }

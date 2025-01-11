@@ -43,4 +43,12 @@ class MovDiarioController extends BaseController {
             $this->errorResponse($e->getMessage(), 500);
         }
     }
+    public function createMovDiario($data) {
+        try {
+            return $this->movDiarioModel->addMovDiario($data);
+        } catch (Exception $e) {
+            throw new Exception("Error al crear el movimiento del diario: " . $e->getMessage());
+        }
+    }
+    
 }
