@@ -23,27 +23,26 @@ document.addEventListener("DOMContentLoaded", function () {
                     const realizarPagoButton = document.querySelector("#realizarPagoButton"); // Seleccionar el botón
                     detalleTable.innerHTML = ""; // Limpiar contenido anterior
 
-                    // Verificar si la respuesta es un objeto o un array
-                    if (data && !Array.isArray(data)) {
-                        data = [data]; // Convierte un objeto en array para procesarlo
-                    }
-
-                    if (data.length > 0) {
-                        data.forEach(detalle => {
-                            const row = document.createElement("tr");
-                            row.innerHTML = `
-                                <td>${detalle.nombre}</td>
-                                <td>${detalle.preciov}</td>
-                                <td>${detalle.qty}</td>
-                                <td>${detalle.status}</td>
-                            `;
-                            detalleTable.appendChild(row);
-                        });
-                        document.querySelector("#detallePedido").style.visibility = "visible";
-                    } else {
+                    // Validar si hay datos
+                    if (!data || data.length === 0) {
                         detalleTable.innerHTML = "<tr><td colspan='4'>No hay detalles disponibles.</td></tr>";
                         document.querySelector("#detallePedido").style.visibility = "visible";
+                        realizarPagoButton.style.display = "none"; // Ocultar el botón si no hay detalles
+                        return;
                     }
+
+                    // Renderizar los detalles en la tabla
+                    data.forEach(detalle => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${detalle.nombre}</td>
+                            <td>${detalle.preciov}</td>
+                            <td>${detalle.qty}</td>
+                            <td>${detalle.status}</td>
+                        `;
+                        detalleTable.appendChild(row);
+                    });
+                    document.querySelector("#detallePedido").style.visibility = "visible";
 
                     // Mostrar el botón "Realizar Pago" si el estado del pedido es 'P'
                     if (status === "P") {
@@ -56,6 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => {
                     console.error("Error:", error);
                     alert("Hubo un error al cargar el detalle del pedido.");
+                    const detalleTable = document.querySelector("#detallePedido tbody");
+                    detalleTable.innerHTML = "<tr><td colspan='4'>Error al cargar los detalles.</td></tr>";
+                    document.querySelector("#detallePedido").style.visibility = "visible";
                 });
         });
     });

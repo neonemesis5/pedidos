@@ -1,3 +1,12 @@
+<?php
+session_start(); // Inicia la sesión
+
+// Verifica si el usuario no está autenticado
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /pedidos/php/view/login.php"); // Redirige al login si no está autenticado
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +23,9 @@
     <h1>Sistema de Gestión de Pedidos</h1>
     <div class="header-actions">
       <h3>Pedido NRO: <span id="pedidoNro">Cargando...</span></h3>
+    </div>
+    <div class="header-actions">
+      <button id="btnlistadop" onclick="window.location.href='php/view/listadopedido.php'">Listado de Pedidos del Día</button>
       <button id="btnlogout" onclick="logout()">Cerrar Sesión</button>
     </div>
   </div>

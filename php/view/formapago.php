@@ -1,26 +1,53 @@
 <?php
+session_start(); // Inicia la sesión
+
+// Verifica si el usuario no está autenticado
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /pedidos/php/view/login.php"); // Redirige al login si no está autenticado
+    exit;
+}
 
 require_once __DIR__ . '/../controller/FormaPagoController.php';
+require_once __DIR__ . '/../controller/PedidoController.php';
+require_once __DIR__ . '/../controller/TasaController.php';
+
+// Validar el ID del pedido recibido por GET
+$pedidoId = isset($_GET['pedido_id']) ? intval($_GET['pedido_id']) : null;
+
+if (!$pedidoId) {
+    die("ID del pedido no proporcionado.");
+}
 
 // Instanciar el controlador
 $formaPagoController = new FormaPagoController();
+$tasaController = new TasaController();
+try {
+    // Obtener las formas de pago como array
+    $formasPago = $formaPagoController->getAllFormasPagoArray();
+
+    if (!is_array($formasPago) || empty($formasPago)) {
+        throw new Exception("No se encontraron formas de pago.");
+    }
+} catch (Exception $e) {
+    die("Error al cargar las formas de pago: " . $e->getMessage());
+}
 
 try {
-    // Obtener todas las formas de pago
-    ob_start();
-    $formaPagoController->getAllFormasPago();
-    $response = ob_get_clean();
-
-    // Decodificar la respuesta JSON
-    $formasPago = json_decode($response, true);
-
-    // Mostrar las formas de pago en una lista
-    echo "<ul>";
-    foreach ($formasPago as $formaPago) {
-        echo "<li>ID: {$formaPago['id']} - Nombre: {$formaPago['nombre']}</li>";
-    }
-    echo "</ul>";
+    // Obtener las tasas actuales
+    $tasas = $tasaController->getCurrentRates2();
+    $tasaUSD = $tasas['USD_COP'] ?? 1; // Ejemplo: Tasa USD a COP
+    $tasaVES = $tasas['COP_BSS'] ?? 1; // Ejemplo: Tasa VES a COP
 } catch (Exception $e) {
-    http_response_code(500);
-    echo "Error al obtener las formas de pago: " . $e->getMessage();
+    die("Error al cargar las tasas: " . $e->getMessage());
 }
+try {
+    $Pedido = new PedidoController();
+    $AMT_Pedido=$Pedido->getMontoTotalByID($pedidoId);
+    if (!is_numeric($AMT_Pedido)) {
+        $AMT_Pedido = 0; // Asignamos 0 si no es numérico
+    }
+} catch (\Throwable $th) {
+    die("Error al cargar total de Pedido de pago: " . $e->getMessage());
+}
+
+?>

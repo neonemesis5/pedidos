@@ -1,4 +1,12 @@
 <?php
+session_start(); // Inicia la sesión
+
+// Verifica si el usuario no está autenticado
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /pedidos/php/view/login.php"); // Redirige al login si no está autenticado
+    exit;
+}
+
 require_once __DIR__ . '/../controller/PedidoController.php';
 require_once __DIR__ . '/../controller/detallepedcontroller.php';
 
@@ -20,22 +28,31 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
             margin: 20px;
         }
 
-        #principal {
-            width: 100%;
-            table-layout: fixed;
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
         }
 
-        #c00,
-        #c01 {
-            vertical-align: top;
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        #c00 {
-            width: 60%;
+        button {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
         }
 
-        #c01 {
-            width: 40%;
+        button:hover {
+            background-color: #0056b3;
         }
 
         table {
@@ -60,19 +77,6 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
             background-color: #f4f4f4;
         }
 
-        button {
-            padding: 5px 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
         #detallePedido {
             visibility: hidden;
         }
@@ -91,17 +95,19 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
         #realizarPagoButton:hover {
             background-color: #218838;
         }
-
-        /* Sombrado al pasar el cursor por la fila */
-        /* tr:hover {
-            background-color: #f0f8ff;
-        } */
     </style>
     <script src="<?php echo $baseUrl; ?>/js/listadopedido.js" defer></script>
 </head>
 
 <body>
-    <h1>Lista de Pedidos</h1>
+    <div class="header-container">
+        <h1>Listado de Pedidos</h1>
+        <div class="header-actions">
+            <button id="btnvolver" onclick="window.location.href='/pedidos/index.php'">Volver al Inicio</button>
+            <button id="btnlogout" onclick="logout()">Cerrar Sesión</button>
+        </div>
+    </div>
+
     <table id="principal">
         <tr>
             <td id="col1">Últimos Pedidos</td>
@@ -151,10 +157,6 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
                 <!-- Botón Realizar Pago -->
                 <a id="realizarPagoButton" href="#">Realizar Pago</a>
             </td>
-        </tr>
-        <tr>
-            <td id="c10"></td>
-            <td id="c11"></td>
         </tr>
     </table>
 </body>
