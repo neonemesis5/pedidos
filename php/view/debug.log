@@ -292,3 +292,279 @@ addDetalle--Datos recibidos: Array
 
 [2025-01-11 13:47:52] Estado del pedido actualizado a: C para el pedido ID: 100
 [2025-01-11 13:47:52] Pagos registrados exitosamente.
+addPedido - ID insertado: 109
+addPedido - ID generado: 109
+Pedido ID generado: 109
+guardar_pedido--Detalle a insertar: Array
+(
+    [pedido_id] => 109
+    [producto_id] => 1000
+    [qty] => 1
+    [preciov] => 6000
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [pedido_id] => 109
+    [producto_id] => 1000
+    [qty] => 1
+    [preciov] => 6000
+    [status] => A
+)
+
+guardar_pedido--Detalle a insertar: Array
+(
+    [pedido_id] => 109
+    [producto_id] => 1001
+    [qty] => 1
+    [preciov] => 6000
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [pedido_id] => 109
+    [producto_id] => 1001
+    [qty] => 1
+    [preciov] => 6000
+    [status] => A
+)
+
+[2025-01-11 15:58:18] Datos recibidos: Array
+(
+    [pedido_id] => 109
+    [pagos] => Array
+        (
+            [0] => Array
+                (
+                    [forma_pago_id] => 10
+                    [moneda] => COP
+                    [monto] => 0
+                )
+
+            [1] => Array
+                (
+                    [forma_pago_id] => 10
+                    [moneda] => USD
+                    [monto] => 0
+                )
+
+            [2] => Array
+                (
+                    [forma_pago_id] => 10
+                    [moneda] => BSS
+                    [monto] => 0
+                )
+
+            [3] => Array
+                (
+                    [forma_pago_id] => 20
+                    [moneda] => COP
+                    [monto] => 0
+                )
+
+            [4] => Array
+                (
+                    [forma_pago_id] => 20
+                    [moneda] => USD
+                    [monto] => 0
+                )
+
+            [5] => Array
+                (
+                    [forma_pago_id] => 20
+                    [moneda] => BSS
+                    [monto] => 0
+                )
+
+            [6] => Array
+                (
+                    [forma_pago_id] => 30
+                    [moneda] => COP
+                    [monto] => 0
+                )
+
+            [7] => Array
+                (
+                    [forma_pago_id] => 30
+                    [moneda] => USD
+                    [monto] => 0
+                )
+
+            [8] => Array
+                (
+                    [forma_pago_id] => 30
+                    [moneda] => BSS
+                    [monto] => 0
+                )
+
+        )
+
+    [pendienteCobrar] => 1
+    [valeEmpleados] => 
+    [organismos] => 
+)
+
+[2025-01-11 15:58:18] Mapeo de monedas: Array
+(
+    [COP] => 10
+    [USD] => 20
+    [BSS] => 30
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 10
+    [moneda] => COP
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 10
+    [moneda_id] => 10
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 10
+    [moneda] => USD
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 10
+    [moneda_id] => 20
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 10
+    [moneda] => BSS
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 10
+    [moneda_id] => 30
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 20
+    [moneda] => COP
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 20
+    [moneda_id] => 10
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 20
+    [moneda] => USD
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 20
+    [moneda_id] => 20
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 20
+    [moneda] => BSS
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 20
+    [moneda_id] => 30
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 30
+    [moneda] => COP
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 30
+    [moneda_id] => 10
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 30
+    [moneda] => USD
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 30
+    [moneda_id] => 20
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Procesando pago: Array
+(
+    [forma_pago_id] => 30
+    [moneda] => BSS
+    [monto] => 0
+)
+
+[2025-01-11 15:58:18] Insertando detalle: Array
+(
+    [pedido_id] => 109
+    [formapago_id] => 30
+    [moneda_id] => 30
+    [fecha] => 2025-01-11 15:58:18
+    [monto] => 0
+    [status] => E
+)
+
+[2025-01-11 15:58:18] Estado del pedido actualizado a: P para el pedido ID: 109
+[2025-01-11 15:58:18] Pagos registrados exitosamente.

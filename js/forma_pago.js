@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // console.log(result);
                 if (result.success) {
                     alert("Pago registrado correctamente");
-                    window.location.href = "../../index.html";
+                    window.location.href = "../../index.php";
 
                 } else {
                     alert("Error al registrar el pago: " + result.message);

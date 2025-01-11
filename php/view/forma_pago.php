@@ -1,4 +1,12 @@
 <?php
+session_start(); // Inicia la sesión
+
+// Verifica si el usuario no está autenticado
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /php/view/login.php"); // Redirige al login si no está autenticado
+    exit;
+}
+
 require_once __DIR__ . '/../controller/FormaPagoController.php';
 require_once __DIR__ . '/../controller/PedidoController.php';
 require_once __DIR__ . '/../controller/TasaController.php';
