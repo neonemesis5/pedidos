@@ -29,63 +29,74 @@ if ($tipoSeleccionado) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kardex - ENTRADAS Y SALIDAS</title>
     <style>
-      <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-    }
-    th {
-        background-color: #f4f4f4;
-    }
-    button {
-        padding: 5px 10px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 3px;
-    }
-    button:hover {
-        background-color: #218838;
-    }
-    .btn-logout {
-        background-color: #dc3545; /* Rojo */
-        color: white;
-        padding: 10px 15px;
-        border-radius: 5px;
-        border: none;
-        font-size: 14px;
-        cursor: pointer;
-    }
-    .btn-logout:hover {
-        background-color: #c82333; /* Rojo oscuro */
-    }
-    #header {
-        margin-bottom: 20px;
-    }
-    #header table {
-        width: 100%;
-    }
-    #titlerep{
-        text-align: left;
-    }
-</style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .btn-logout {
+            background-color: #dc3545;
+            /* Rojo */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+            /* Rojo oscuro */
+        }
+
+        #header {
+            margin-bottom: 20px;
+        }
+
+        #header table {
+            width: 100%;
+        }
+
+        #titlerep {
+            text-align: left;
+        }
     </style>
     <script>
         // Cambiar dinámicamente los productos al seleccionar un tipo
@@ -94,26 +105,29 @@ if ($tipoSeleccionado) {
             window.location.href = url; // Recargar la página con el tipo seleccionado
         }
         document.addEventListener("DOMContentLoaded", () => {
-        const logoutButton = document.getElementById("btnLogout");
+            const logoutButton = document.getElementById("btnLogout");
 
-        logoutButton.addEventListener("click", () => {
-            // Redirige al archivo PHP encargado de cerrar la sesión
-            window.location.href = "/pedidos/php/view/logout.php";
+            logoutButton.addEventListener("click", () => {
+                // Redirige al archivo PHP encargado de cerrar la sesión
+                window.location.href = "/pedidos/php/view/logout.php";
+            });
         });
-    });
     </script>
 </head>
+
 <body>
-<div id="header">
-    <table style="width: 100%;">
-        <tr>
-            <td id="titlerep"><h1>Kardex - ENTRADAS Y SALIDAS</h1></td>
-            <td style="text-align: right;">
-                <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
-            </td>
-        </tr>
-    </table>
-</div>
+    <div id="header">
+        <table style="width: 100%;">
+            <tr>
+                <td id="titlerep">
+                    <h1>Kardex - ENTRADAS Y SALIDAS</h1>
+                </td>
+                <td style="text-align: right;">
+                    <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+                </td>
+            </tr>
+        </table>
+    </div>
 
 
     <table>
@@ -159,4 +173,5 @@ if ($tipoSeleccionado) {
         </tr>
     </table>
 </body>
+
 </html>
