@@ -18,6 +18,9 @@ table {
   .row1 {
     height: 350px;
   }
+  td#c10 {
+    font-size: 10px;
+}
   /* Especificar anchos fijos para las columnas */
   table td:nth-child(1) {
     width: 25%;
@@ -54,6 +57,7 @@ table {
     /* Color del texto */
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-left: 2px;
     /* Animación suave */
   }
 

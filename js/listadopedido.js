@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Seleccionar todos los botones de detalle
+    // Seleccionar todos los botones de detalle 
     const detalleButtons = document.querySelectorAll(".btnDetalle");
 
     detalleButtons.forEach(button => {

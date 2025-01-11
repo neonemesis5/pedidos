@@ -23,7 +23,7 @@ class TipoProductoController extends BaseController {
     // }
     public function getAllTiposProductos() {
         try {
-            return $this->tipoProductoModel->getAllTiposProductos(); // Devuelve un array
+            return $this->tipoProductoModel->getAllTiposProductos2(); // Devuelve un array
         } catch (Exception $e) {
             throw new Exception("Error al obtener los tipos de productos: " . $e->getMessage());
         }

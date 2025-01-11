@@ -107,8 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
     agregarProductoAlCarrito({
       id: productoAsadoSeleccionado.id,
       nombre: `${productoAsadoSeleccionado.nombre} (${gramos}g)`,
-      precio: (productoAsadoSeleccionado.precio * gramos) / 1000,
-      cantidad: gramos,
+      precio: (productoAsadoSeleccionado.precio ) ,
+      cantidad: gramos/100,
     });
 
     // Ocultar el modal después de agregar
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${producto.nombre}</td>
         <td>${producto.cantidad}</td>
         <td>${producto.precio.toFixed(2)} COP</td>
-        <td>${total.toFixed(2)} COP</td>
+        <td>${total.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} COP</td>
       `;
 
       table.appendChild(row);

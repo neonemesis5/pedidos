@@ -14,6 +14,10 @@ class TipoProductoModel extends BaseModel {
         return $this->getAll($this->table);
     }
 
+	public function getAllTiposProductos2() {
+        $sql = "SELECT  id,nombre FROM {$this->table} WHERE status = ?";
+        return $this->db->query($sql, ['A']);
+    }
     /**
      * Obtiene un tipo de producto por su ID.
      *

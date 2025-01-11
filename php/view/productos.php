@@ -25,8 +25,8 @@ try {
                 data-id='{$producto['id']}'
                 data-precio='{$producto['preciov']}'
                 data-tipo='{$tipoProductoId}'>
-                {$producto['nombre']} - [{$producto['preciov']} COP]
-              </button>";
+                {$producto['nombre']} 
+              </button>";//- [{$producto['preciov']} COP]
     }
 } catch (Exception $e) {
     http_response_code(500);
