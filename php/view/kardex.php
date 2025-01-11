@@ -181,7 +181,7 @@ if ($tipoSeleccionado) {
                 </td>
             </tr>
             <tr>
-                <td></td>
+                <td><button onclick="window.location.href='repkardex.php';">Ver Reporte</button></td>
                 <td>
                     <label>Tipo Operación:</label>
                     <input type="checkbox" id="ingreso" checked />
