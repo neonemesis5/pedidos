@@ -151,4 +151,39 @@ table {
     color: black;
     text-decoration: none;
   }
-  
+  /* Contenedor principal del encabezado */
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre elementos */
+  align-items: center; /* Centrar elementos verticalmente */
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Título principal */
+.header-container h1 {
+  margin: 0;
+}
+
+/* Contenedor de las acciones del encabezado */
+.header-actions {
+  display: flex;
+  align-items: center; /* Centra verticalmente el número de pedido y el botón */
+  gap: 15px; /* Espaciado entre el número de pedido y el botón */
+}
+
+/* Botón "Cerrar Sesión" */
+#btnlogout {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+#btnlogout:hover {
+  background-color: #c82333; /* Más oscuro en hover */
+}

@@ -265,3 +265,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Error cargando contenido:", error));
   }
 });
+
+function logout() {
+  // Redirige al logout.php para cerrar sesión
+  window.location.href = "php/view/logout.php";
+}

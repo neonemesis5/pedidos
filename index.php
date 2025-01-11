@@ -1,13 +1,3 @@
-<?php
-session_start(); // Inicia la sesión
-
-// Verifica si el usuario no está autenticado
-if (!isset($_SESSION['user_id'])) {
-    header("Location: /view/login.php"); // Redirige al login si no está autenticado
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,8 +10,13 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-  <h1>Sistema de Gestión de Pedidos</h1>
-  <h3 style="text-align: center;">Pedido NRO <span id="pedidoNro">Cargando...</span></h3>
+  <div class="header-container">
+    <h1>Sistema de Gestión de Pedidos</h1>
+    <div class="header-actions">
+      <h3>Pedido NRO: <span id="pedidoNro">Cargando...</span></h3>
+      <button id="btnlogout" onclick="logout()">Cerrar Sesión</button>
+    </div>
+  </div>
 
   <table>
     <tr>
@@ -30,7 +25,6 @@ if (!isset($_SESSION['user_id'])) {
       <!-- Productos según tipo -->
       <td id="c01" class="container row1">
         Selecciona un tipo de producto
-       
       </td>
     </tr>
     <tr>
@@ -42,22 +36,17 @@ if (!isset($_SESSION['user_id'])) {
       <td id="c11" class="container"><button id="saveOrder">Guardar Pedido</button></td>
     </tr>
   </table>
+
   <div id="asadoModal" class="modal" style="display: none;">
     <div class="modal-content">
       <span id="closeModal" class="close">&times;</span>
       <h2>Seleccionar Gramos</h2>
       <label for="gramosInput">Gramos:</label>
-      <input
-        type="number"
-        id="gramosInput"
-        placeholder="Ingrese gramos"
-        min="1"
-        style="margin-right: 10px;"
-      />
+      <input type="number" id="gramosInput" placeholder="Ingrese gramos" min="1" style="margin-right: 10px;" />
       <button id="addAsadoButton">Agregar</button>
     </div>
   </div>
-  
+
 </body>
 
 </html>
