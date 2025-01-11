@@ -50,7 +50,10 @@ class BaseModel
      */
     public function getWhere($table, $conditions = [], $fetchAll = true)
     {
-        $whereClause = implode(" AND ", array_map(fn($key) => "$key = :$key", array_keys($conditions)));
+        $whereClause = implode(" AND ", array_map(function ($key) {
+            return "$key = :$key";
+        }, array_keys($conditions)));
+        
         $sql = "SELECT * FROM $table WHERE $whereClause";
         try {
             $stmt = $this->db->getConnection()->prepare($sql);
@@ -109,7 +112,10 @@ class BaseModel
      */
     public function update($table, $data, $id)
     {
-        $setClause = implode(", ", array_map(fn($key) => "$key = :$key", array_keys($data)));
+        $setClause = implode(", ", array_map(function ($key) {
+            return "$key = :$key";
+        }, array_keys($data)));
+        
         $sql = "UPDATE $table SET $setClause WHERE id = :id";
         $data['id'] = $id;
         $stmt = $this->db->getConnection()->prepare($sql);
