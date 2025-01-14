@@ -21,6 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authController->login($username, $password);
         if( $_SESSION['rol_id'] === 1 )
             header("Location: /pedidos/index.php"); // Redirigir al sistema principal
+        if( $_SESSION['rol_id'] === 2 )
+            header("Location: diarioventasprod.php"); // Redirigir al sistema principal
         if( $_SESSION['rol_id'] === 3 )
             header("Location: kardex.php"); // Redirigir al sistema principal
         exit;
