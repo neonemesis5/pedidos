@@ -107,8 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
     agregarProductoAlCarrito({
       id: productoAsadoSeleccionado.id,
       nombre: `${productoAsadoSeleccionado.nombre} (${gramos}g)`,
-      precio: (productoAsadoSeleccionado.precio ) ,
-      cantidad: gramos/100,
+      precio: (productoAsadoSeleccionado.precio),
+      cantidad: gramos / 100,
     });
 
     // Ocultar el modal después de agregar
@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Renderizar carrito en c[1][0]
+  // Renderizar carrito en c[1][0]
   function renderizarCarrito() {
     const tabla = document.querySelector("#c10");
     if (!tabla) {
@@ -151,14 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const table = document.createElement("table");
     table.innerHTML = `
-      <tr>
-        <th>Eliminar</th>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio Unitario</th>
-        <th>Total</th>
-      </tr>
-    `;
+    <tr>
+      <th>Eliminar</th>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Precio Unitario</th>
+      <th>Total</th>
+    </tr>
+  `;
 
     let totalCOP = 0;
 
@@ -168,24 +169,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><input type="checkbox" class="delete-checkbox" data-id="${producto.id}"></td>
-        <td>${producto.nombre}</td>
-        <td>${producto.cantidad}</td>
-        <td>${producto.precio.toFixed(2)} COP</td>
-        <td>${total.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} COP</td>
-      `;
+      <td><input type="checkbox" class="delete-checkbox" data-id="${producto.id}"></td>
+      <td>${producto.nombre}</td>
+      <td>${producto.cantidad}</td>
+      <td>${producto.precio.toFixed(2)} COP</td>
+      <td>${total.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} COP</td>
+    `;
 
       table.appendChild(row);
     });
 
     tabla.appendChild(table);
 
+    // Mostrar el total formateado en un div separado con estilos personalizados
     const totalDiv = document.createElement("div");
+    totalDiv.style.fontSize = "24px"; // Tamaño grande
+    totalDiv.style.fontWeight = "bold"; // Negrita
+    totalDiv.style.marginTop = "20px"; // Espaciado superior
+    totalDiv.style.textAlign = "right"; // Alinear a la derecha
+    totalDiv.style.color = "red"; // Color destacado
+
     totalDiv.innerHTML = `
-      <p>Total COP: ${totalCOP.toFixed(2)}</p>
-    `;
+    <p>Total COP: ${totalCOP.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</p>
+  `;
     tabla.appendChild(totalDiv);
   }
+
 
   // Eliminar productos seleccionados cuando se marca el checkbox
   document.querySelector("#c10").addEventListener("change", (event) => {
@@ -203,52 +212,52 @@ document.addEventListener("DOMContentLoaded", () => {
   // Guardar pedido
   saveOrderButton.addEventListener("click", () => {
     if (carrito.length === 0) {
-        alert("El carrito está vacío. No se puede guardar el pedido.");
-        return;
+      alert("El carrito está vacío. No se puede guardar el pedido.");
+      return;
     }
 
     const cliente = {
-        nombre: "Cliente", // Sustituir por valores reales
-        apellido: "Ejemplo",
+      nombre: "Cliente", // Sustituir por valores reales
+      apellido: "Ejemplo",
     };
 
     const data = {
-        cliente,
-        carrito,
-        total: carrito.reduce((sum, item) => sum + item.cantidad * item.precio, 0),
+      cliente,
+      carrito,
+      total: carrito.reduce((sum, item) => sum + item.cantidad * item.precio, 0),
     };
 
     fetch("php/view/guardar_pedido.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Error al guardar el pedido.");
-            }
-            return response.json();
-        })
-        .then((result) => {
-            if (result.success) {
-                alert(`Pedido guardado exitosamente. ID del pedido: ${result.pedido_id}`);
-                carrito.length = 0; // Limpiar carrito
-                renderizarCarrito();
-                window.location.href = `php/view/forma_pago.php?pedido_id=${result.pedido_id}`;
-            } else {
-                alert("Error al guardar el pedido: " + result.message);
-            }
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-            alert("Hubo un error al procesar la solicitud: " + error.message);
-        });
-});
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al guardar el pedido.");
+        }
+        return response.json();
+      })
+      .then((result) => {
+        if (result.success) {
+          alert(`Pedido guardado exitosamente. ID del pedido: ${result.pedido_id}`);
+          carrito.length = 0; // Limpiar carrito
+          renderizarCarrito();
+          window.location.href = `php/view/forma_pago.php?pedido_id=${result.pedido_id}`;
+        } else {
+          alert("Error al guardar el pedido: " + result.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Hubo un error al procesar la solicitud: " + error.message);
+      });
+  });
 
-  
-  
+
+
 
   // Función para cargar contenido dinámico
   function loadContent(url, target) {

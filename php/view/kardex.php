@@ -103,9 +103,27 @@ if ($tipoSeleccionado) {
             window.location.href = url; // Recargar la página con el tipo seleccionado
         }
         document.addEventListener("DOMContentLoaded", () => {
+            const logoutButton = document.getElementById("btnLogout");
+            logoutButton.addEventListener("click", () => {
+                // Redirige al archivo PHP encargado de cerrar la sesión
+                window.location.href = "/pedidos/php/view/logout.php";
+            });
             const btnGuardar = document.getElementById("btnGuardar");
             const ingresoCheckbox = document.getElementById("ingreso");
             const salidaCheckbox = document.getElementById("salida");
+
+            // Asegurar que solo uno de los checkboxes pueda estar seleccionado
+            ingresoCheckbox.addEventListener("change", () => {
+                if (ingresoCheckbox.checked) {
+                    salidaCheckbox.checked = false;
+                }
+            });
+
+            salidaCheckbox.addEventListener("change", () => {
+                if (salidaCheckbox.checked) {
+                    ingresoCheckbox.checked = false;
+                }
+            });
 
             btnGuardar.addEventListener("click", () => {
                 const rows = document.querySelectorAll("table tbody tr");
