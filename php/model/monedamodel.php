@@ -54,4 +54,12 @@ class MonedaModel extends BaseModel {
     public function deleteMoneda($id) {
         return $this->delete($this->table, $id);
     }
+    public function getAllmonedas2()
+    {
+        $sql = "
+            select id,concat(id,'-',nombre) as nombre from moneda where id<>?
+        ";
+
+        return $this->customQuery($sql, [1]);
+    }
 }

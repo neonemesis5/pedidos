@@ -85,7 +85,23 @@ class PedidoModel extends BaseModel {
     public function getTotalPedido($id){
         return $this->customQuery('select total from pedido where id=?',[$id]);
     }
-    public function getListPedidos(){
-        return  $this->customQuery('select id,fecha,total,status from pedido where fecha >= ? order by id desc limit 30',[date('Y-m-d')]);
+    public function getListPedidos($status = null, $fecha = null) {
+        $whereClause = '';
+        $params = [];
+        
+        if (!is_null($status)) {
+            $whereClause .= ' status = ? AND';
+            $params[] = $status;
+        }
+    
+        $q = "SELECT id, fecha, total, status 
+              FROM pedido 
+              WHERE $whereClause fecha >= ?  
+              ORDER BY id DESC 
+              LIMIT 30";
+    
+        $params[] = !empty($fecha) ? $fecha : date('Y-m-d'); 
+        return $this->customQuery($q, $params);
     }
+    
 }

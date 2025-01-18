@@ -29,6 +29,14 @@ class MonedaController extends BaseController {
             throw new Exception("Error al obtener las monedas: " . $e->getMessage());
         }
     }
+    public function getAllMonedasID() {
+        try {
+            $monedas = $this->monedaModel->getAllMonedas2();
+            return $monedas;
+        } catch (Exception $e) {
+            throw new Exception("Error al obtener las monedas: " . $e->getMessage());
+        }
+    }
     
     /**
      * Obtiene una moneda por su ID.

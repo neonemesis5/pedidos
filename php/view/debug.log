@@ -1,41 +1,96 @@
-Datos recibidos en guardar_kardex.php: Array
+addPedido - ID insertado: 120
+Factura creada exitosamente - ID generado: 120
+Factura ID generada: 120
+Insertando detalle: Array
 (
-    [tipoProductoId] => 300
-    [tipoOperacion] => 1000
-    [productos] => Array
-        (
-            [0] => Array
-                (
-                    [producto_id] => 1300
-                    [cantidad] => 200
-                )
-
-        )
-
-)
-Error al guardar registros: Error al crear el diario: Error ejecutando consulta: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "diario" violates foreign key constraint "tipooper_fk1"
-DETAIL:  Key (tipooper_id)=(2) is not present in table "tipooper".
-Datos recibidos en guardar_kardex.php: Array
-(
-    [tipoProductoId] => 300
-    [tipoOperacion] => 1000
-    [productos] => Array
-        (
-            [0] => Array
-                (
-                    [producto_id] => 1300
-                    [cantidad] => 200
-                )
-
-        )
-
-)
-Diario creado con ID: 6
-Datos de movimiento: Array
-(
-    [producto_id] => 1300
-    [diario_id] => 6
-    [qty] => 200
-    [observacion] => Registro desde Kardex
+    [producto_id] => 1400
+    [factcompra_id] => 120
+    [qty] => 1
+    [precioc] => 323
     [status] => A
 )
+
+addDetalle--Datos recibidos: Array
+(
+    [producto_id] => 1400
+    [factcompra_id] => 120
+    [qty] => 1
+    [precioc] => 323
+    [status] => A
+)
+
+Insertando detalle: Array
+(
+    [producto_id] => 1000
+    [factcompra_id] => 120
+    [qty] => 1
+    [precioc] => 323
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [producto_id] => 1000
+    [factcompra_id] => 120
+    [qty] => 1
+    [precioc] => 323
+    [status] => A
+)
+
+Insertando detalle: Array
+(
+    [producto_id] => 1001
+    [factcompra_id] => 120
+    [qty] => 1
+    [precioc] => 34
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [producto_id] => 1001
+    [factcompra_id] => 120
+    [qty] => 1
+    [precioc] => 34
+    [status] => A
+)
+
+addPedido - ID insertado: 121
+Factura creada exitosamente - ID generado: 121
+Factura ID generada: 121
+Insertando detalle: Array
+(
+    [producto_id] => 1302
+    [factcompra_id] => 121
+    [qty] => 1
+    [precioc] => 045
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [producto_id] => 1302
+    [factcompra_id] => 121
+    [qty] => 1
+    [precioc] => 045
+    [status] => A
+)
+
+Insertando detalle: Array
+(
+    [producto_id] => 1000
+    [factcompra_id] => 121
+    [qty] => 1
+    [precioc] => 55
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [producto_id] => 1000
+    [factcompra_id] => 121
+    [qty] => 1
+    [precioc] => 55
+    [status] => A
+)
+
