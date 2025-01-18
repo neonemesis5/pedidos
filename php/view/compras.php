@@ -41,6 +41,105 @@ try {
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+th {
+    background: #007bff;
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+select, input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #218838;
+}
+
+#guardar {
+    background: #dc3545;
+    font-weight: bold;
+}
+
+#guardar:hover {
+    background: #c82333;
+}
+
+#agregarFila {
+    background: #007bff;
+}
+
+#agregarFila:hover {
+    background: #0056b3;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+.total {
+    font-weight: bold;
+    color: #28a745;
+}
+
+#TOTALFACTURA {
+    font-size: 18px;
+    font-weight: bold;
+    background: #ffeb3b;
+    color: #333;
+}
+
+    </style>
 </head>
 
 <body>
