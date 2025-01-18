@@ -33,6 +33,7 @@ try {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +47,9 @@ try {
     <div>
         <table border="0" style="border-collapse: collapse;">
             <tr>
-                <td><h2>Factura de Compra</h2></td>
+                <td>
+                    <h2>Factura de Compra</h2>
+                </td>
                 <td style="text-align: right;">
                     <button type="button" id="guardar">PROCESAR FACTURA</button>
                 </td>
@@ -117,6 +120,13 @@ try {
         document.addEventListener("DOMContentLoaded", function() {
             const tabla = document.querySelector('#tablaproductos tbody');
             const totalFacturaInput = document.getElementById('TOTALFACTURA');
+            const form = document.getElementById('factura-form');
+
+            function limpiarFormulario() {
+                form.reset();
+                tabla.innerHTML = "";
+                totalFacturaInput.value = "0.00";
+            }
 
             function calcularTotalFactura() {
                 let total = 0;
@@ -144,7 +154,7 @@ try {
                         </select>
                     </td>
                     <td><input type="number" class="cantidad" min="1" value="1"></td>
-                    <td><input type="number" class="precioUnitario" min="0" step="0.01" value="0"></td>
+                    <td><input type="number" class="precioUnitario" min="0" step="0.01" value=""></td>
                     <td class="total">0.00</td>
                 `;
 
@@ -199,13 +209,28 @@ try {
                 });
 
                 fetch('savefactcompra.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(data)
-                }).then(response => response.json())
-                  .then(data => alert(data.message));
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json()) 
+                    .then(result => {
+                        if (result.success) {
+                            alert('✅ Factura guardada correctamente');
+                            limpiarFormulario(); // ✅ Limpiar formulario después de guardar
+                        } else {
+                            alert('❌ Error al guardar la factura: ' + result.message);
+                        }
+                    })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('⚠️ Ocurrió un error al procesar la factura.');
+                });
             });
         });
     </script>
 </body>
+
 </html>
