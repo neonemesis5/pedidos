@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_id']) ) {
+    header("Location: /pedidos/php/view/login.php");
+    exit;
+}
 require_once __DIR__ . '/../controller/FormaPagoController.php';
 require_once __DIR__ . '/../controller/PedidoController.php';
 require_once __DIR__ . '/../controller/TasaController.php';
@@ -129,13 +133,12 @@ try {
                 .then(response => response.json())
                 .then(result => {
                     if (result.success) {
-                        alert("Pago registrado correctamente");
-                        if (pendienteCobrar || valeEmpleados || organismos) {
-                            window.location.href = "../../index.php";
-                        }
-                    } else {
-                        alert("Error al registrar el pago: " + result.message);
-                    }
+                    alert("Pago registrado correctamente");
+                    window.location.href = "../../index.php";
+
+                } else {
+                    alert("Error al registrar el pago: " + result.message);
+                }
                 })
                 .catch(error => {
                     console.error("Error:", error);

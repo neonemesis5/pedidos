@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Mostrar el botón "Realizar Pago" si el estado del pedido es 'P'
                     if (status === "P") {
                         realizarPagoButton.style.display = "block"; // Mostrar el botón
-                        realizarPagoButton.href = `${baseUrl}/php/view/forma_pago.php?pedido_id=${pedidoId}`; // Establecer el enlace dinámicamente
+                        realizarPagoButton.href = `${baseUrl}/php/view/formapago.php?pedido_id=${pedidoId}`; // Establecer el enlace dinámicamente
                     } else {
                         realizarPagoButton.style.display = "none"; // Ocultar el botón si el estado no es 'P'
                     }
