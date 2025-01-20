@@ -184,6 +184,9 @@ if ($tipoSeleccionado) {
                     });
             });
         });
+        function logout() {
+            window.location.href = "logout.php";
+        }
     </script>
 </head>
 
@@ -195,7 +198,10 @@ if ($tipoSeleccionado) {
                     <h1>Kardex - ENTRADAS Y SALIDAS</h1>
                 </td>
                 <td style="text-align: right;">
-                    <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+                    <div class="header-actions">
+                        <button id="btnlistadop" onclick="window.location.href='repkardex.php'">Reporte Entradas y Salidas</button>
+                        <button id="btnlogout" class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+                    </div>
                 </td>
             </tr>
             <tr>

@@ -49,3 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+function logout() {
+    // Redirige al logout.php para cerrar sesión
+    window.location.href = "php/view/logout.php";
+  }

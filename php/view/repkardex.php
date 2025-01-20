@@ -94,45 +94,86 @@ if (isset($_GET['filtrar'])) {
             flex: 1;
             min-width: 200px;
         }
+        .btn-logout {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+        }
     </style>
+    <script>
+        function logout() {
+            window.location.href = "logout.php";
+        }
+    </script>
 </head>
 
 <body>
-    <h1>Reporte Kardex</h1>
+    <table>
+        <tr>
+            <td style="width: 70%;">
+                <h1>Reporte Kardex</h1>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="header-actions">
+                                <button id="btnvolver" onclick="window.location.href='compras.php'">Cargar Compras</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="header-actions">
+                                <button id="btnvolver" onclick="window.location.href='kardex.php'">Volver al Kardex</button>
+                                <button id="btnlogout" class="btn-logout"  onclick="logout()">Cerrar Sesión</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
 
+            </td>
+        </tr>
+    </table>
     <form method="GET" action="repkardex.php" class="filter-container">
-    <div class="row">
-        <!-- Tipo de Operación -->
-        <div class="col">
-            <label for="idOper">Tipo de Operación</label>
-            <select name="idOper" id="idOper">
-                <option value="">Seleccionar</option>
-                <option value="1000" <?php echo ($idOper == 1000) ? 'selected' : ''; ?>>Ingreso</option>
-                <option value="1001" <?php echo ($idOper == 1001) ? 'selected' : ''; ?>>Salida</option>
-            </select>
+        <div class="row">
+            <!-- Tipo de Operación -->
+            <div class="col">
+                <label for="idOper">Tipo de Operación</label>
+                <select name="idOper" id="idOper">
+                    <option value="">Seleccionar</option>
+                    <option value="1000" <?php echo ($idOper == 1000) ? 'selected' : ''; ?>>Ingreso</option>
+                    <option value="1001" <?php echo ($idOper == 1001) ? 'selected' : ''; ?>>Salida</option>
+                </select>
+            </div>
+
+            <!-- Fecha de Inicio -->
+            <div class="col">
+                <label for="fechaInicio">Fecha de Inicio</label>
+                <input type="date" name="fechaInicio" id="fechaInicio" value="<?php echo htmlspecialchars($fechaInicio ?? ""); ?>">
+            </div>
+
+            <!-- Fecha de Fin -->
+            <div class="col">
+                <label for="fechaFin">Fecha de Fin</label>
+                <input type="date" name="fechaFin" id="fechaFin" value="<?php echo htmlspecialchars($fechaFin ?? ""); ?>">
+            </div>
+
+            <!-- ID del Producto -->
+            <div class="col">
+                <label for="idProducto">ID del Producto</label>
+                <input type="number" name="idProducto" id="idProducto" value="<?php echo htmlspecialchars($idProducto ?? ""); ?>">
+            </div>
         </div>
 
-        <!-- Fecha de Inicio -->
-        <div class="col">
-            <label for="fechaInicio">Fecha de Inicio</label>
-            <input type="date" name="fechaInicio" id="fechaInicio" value="<?php echo htmlspecialchars($fechaInicio ?? ""); ?>">
-        </div>
-
-        <!-- Fecha de Fin -->
-        <div class="col">
-            <label for="fechaFin">Fecha de Fin</label>
-            <input type="date" name="fechaFin" id="fechaFin" value="<?php echo htmlspecialchars($fechaFin ?? ""); ?>">
-        </div>
-
-        <!-- ID del Producto -->
-        <div class="col">
-            <label for="idProducto">ID del Producto</label>
-            <input type="number" name="idProducto" id="idProducto" value="<?php echo htmlspecialchars($idProducto ?? ""); ?>">
-        </div>
-    </div>
-
-    <input type="submit" name="filtrar" value="Filtrar">
-</form>
+        <input type="submit" name="filtrar" value="Filtrar">
+    </form>
 
 
     <?php if (!empty($reporte)): ?>
