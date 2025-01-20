@@ -11,9 +11,25 @@ class FacturaCompraModel extends BaseModel
      *
      * @return array Lista de todas las facturas.
      */
-    public function getAllFacturasCompra()
+    public function getAllFacturasCompra($status = null, $fecha = null)
     {
-        return $this->getAll($this->table);
+        $whereClause = [];
+    
+        $params[] =!is_null($status)? $status:'A';
+    
+        if(!is_null($fecha)){
+            $fechaClause = !empty($fecha) ? ' and fac.fecha::date >= ?' : '';
+            $params[] =!empty($fecha) ?? $fecha;
+        }
+    
+        $q = "SELECT fac.id, pro.nombre as nomprov, mon.nombre as nommoneda ,fac.nrofactura, fac.fecha, fac.total,fac.status
+               FROM factura_compra fac
+               JOIN moneda mon ON mon.id = fac.moneda_id
+               JOIN proveedor pro ON pro.id = fac.proveedor_id
+               WHERE fac.status=?";
+
+    
+        return $this->customQuery($q, $params);
     }
 
     /**

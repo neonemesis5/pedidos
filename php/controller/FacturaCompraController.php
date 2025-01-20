@@ -13,10 +13,10 @@ class FacturaCompraController extends BaseController {
     /**
      * Obtiene todas las facturas de compra.
      */
-    public function getAllFacturasCompra() {
+    public function getAllFacturasCompra($status=null, $fecha=null) {
         try {
-            $facturas = $this->facturaCompraModel->getAllFacturasCompra();
-            $this->jsonResponse($facturas);
+            $facturas = $this->facturaCompraModel->getAllFacturasCompra($status,$fecha);
+            return $facturas;// $this->jsonResponse($facturas);
         } catch (Exception $e) {
             $this->errorResponse($e->getMessage(), 500);
         }

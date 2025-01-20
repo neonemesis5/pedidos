@@ -44,7 +44,7 @@ class DetalleCompraModel extends BaseModel
                 (dc.qty * dc.precioc) AS total 
             FROM detallecompra dc
             JOIN producto p ON dc.producto_id = p.id
-            WHERE dc.factura_compra_id = ?
+            WHERE dc.factcompra_id = ?
         ";
         return $this->customQuery($query, [$facturaCompraId]);
     }
