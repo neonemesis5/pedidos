@@ -184,8 +184,14 @@ if ($tipoSeleccionado) {
                     });
             });
         });
+
         function logout() {
             window.location.href = "logout.php";
+        }
+
+        function compras() {
+            // Redirige al logout.php para cerrar sesión
+            window.location.href = "compras.php";
         }
     </script>
 </head>
@@ -197,15 +203,26 @@ if ($tipoSeleccionado) {
                 <td id="titlerep">
                     <h1>Kardex - ENTRADAS Y SALIDAS</h1>
                 </td>
-                <td style="text-align: right;">
-                    <div class="header-actions">
-                        <button id="btnlistadop" onclick="window.location.href='repkardex.php'">Reporte Entradas y Salidas</button>
-                        <button id="btnlogout" class="btn-logout" onclick="logout()">Cerrar Sesión</button>
-                    </div>
+                <td>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <button id="btncompras" onclick="compras()">Compras</button>
+                            </td>
+                            <td style="text-align: right;">
+                                <div class="header-actions">
+                                    <button id="btnlistadop" onclick="window.location.href='repkardex.php'">Reporte Entradas y Salidas</button>
+                                    <button id="btnlogout" class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
+
             </tr>
             <tr>
-                <td><button onclick="window.location.href='repkardex.php';">Ver Reporte</button></td>
+                <td>&nbsp;</td>
                 <td>
                     <label>Tipo Operación:</label>
                     <input type="checkbox" id="ingreso" checked />
