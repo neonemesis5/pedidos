@@ -1,0 +1,77 @@
+addPedido - ID insertado: 100
+addPedido - ID generado: 100
+Pedido ID generado: 100
+guardar_pedido--Detalle a insertar: Array
+(
+    [pedido_id] => 100
+    [producto_id] => 1001
+    [qty] => 2
+    [preciov] => 6000
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [pedido_id] => 100
+    [producto_id] => 1001
+    [qty] => 2
+    [preciov] => 6000
+    [status] => A
+)
+
+[2025-01-20 19:45:52] Datos recibidos: Array
+(
+    [pedido_id] => 100
+    [pagos] => Array
+        (
+            [ecop] => 0
+            [eusd] => 0
+            [ebss] => 60
+            [bcop] => 0
+            [zusd] => 1
+            [busd] => 1
+            [bbss] => 0
+            [tbss] => 0
+        )
+
+    [total_pagado] => 12100
+    [sobrante_faltante] => 100
+)
+
+[2025-01-20 19:45:52] Mapeo de monedas: Array
+(
+    [COP] => 10
+    [USD] => 20
+    [BSS] => 30
+)
+
+[2025-01-20 19:45:52] Procesando pago: 0
+[2025-01-20 19:45:52] Error: Datos de pago incompletos.
+[2025-01-20 19:47:52] Datos recibidos: Array
+(
+    [pedido_id] => 100
+    [pagos] => Array
+        (
+            [ecop] => 0
+            [eusd] => 0
+            [ebss] => 60
+            [bcop] => 0
+            [zusd] => 1
+            [busd] => 1
+            [bbss] => 0
+            [tbss] => 0
+        )
+
+    [total_pagado] => 12100
+    [sobrante_faltante] => 100
+)
+
+[2025-01-20 19:47:52] Mapeo de monedas: Array
+(
+    [COP] => 10
+    [USD] => 20
+    [BSS] => 30
+)
+
+[2025-01-20 19:47:52] Procesando pago: 0
+[2025-01-20 19:47:52] Error: Datos de pago incompletos.

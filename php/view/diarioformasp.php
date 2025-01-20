@@ -1,4 +1,12 @@
 <?php
+// session_start();
+
+// // Verificar sesión y rol del usuario
+// if (!isset($_SESSION['user_id']) ) {
+//     header("Location: /pedidos/php/view/login.php");
+//     exit;
+// }
+
 require_once __DIR__ . '/../controller/RepAdminController.php';
 require_once __DIR__ . '/../controller/PedidoController.php';
 

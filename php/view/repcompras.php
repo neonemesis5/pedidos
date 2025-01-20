@@ -1,11 +1,11 @@
 <?php
-// session_start(); // Inicia la sesión
+session_start();
 
-// // Verifica si el usuario no está autenticado
-// if (!isset($_SESSION['user_id'])) {
-//     header("Location: /pedidos/php/view/login.php"); // Redirige al login si no está autenticado
-//     exit;
-// }
+// Verificar sesión y rol del usuario
+if (!isset($_SESSION['user_id']) || $_SESSION['rol_id'] != 3) {
+    header("Location: /pedidos/php/view/login.php");
+    exit;
+}
 
 require_once __DIR__ . '/../controller/FacturaCompraController.php';
 require_once __DIR__ . '/../controller/DetalleCompraController.php';
@@ -82,7 +82,8 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
         }
 
         #realizarPagoButton {
-            display: none; /* Ocultar el botón por defecto */
+            display: none;
+            /* Ocultar el botón por defecto */
             margin-top: 10px;
             padding: 10px 15px;
             background-color: #28a745;
@@ -95,13 +96,47 @@ $baseUrl = '/pedidos'; // Ajusta esto si el proyecto tiene un subdirectorio dist
         #realizarPagoButton:hover {
             background-color: #218838;
         }
+        .btn-logout {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+        }
     </style>
     <script src="<?php echo $baseUrl; ?>/js/listadocompras.js" defer></script>
 </head>
 
 <body>
+    <div>
+        <table>
+            <tr>
+                <td style="width: 70%;">
+                    <h1>Reporte de Compras</h1>
+                </td>
+                <td >
+                    <table>
+                        <tr >
+                            <td>
+                                <button type="button" id="listacomp" onclick="compras()">Regresar a Facturar Compras </button>
+                            </td>
+                            <td>
+                                <button id="btnlogout" class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
 
-    <h1>Reporte de Compras</h1>
+    </div>
+
 
     <table id="principal">
         <tr>

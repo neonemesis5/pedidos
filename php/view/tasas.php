@@ -3,8 +3,9 @@ session_start(); // Inicia la sesión
 
 // Verifica si el usuario no está autenticado
 if (!isset($_SESSION['user_id'])) {
-    http_response_code(401); // Código de error no autorizado
-    echo json_encode(['error' => 'No autorizado']);
+    // http_response_code(401); // Código de error no autorizado
+    // echo json_encode(['error' => 'No autorizado']);
+    header("Location: /pedidos/php/view/login.php");
     exit;
 }
 

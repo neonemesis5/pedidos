@@ -49,7 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+function compras() {
+    // Redirige al logout.php para cerrar sesión
+    window.location.href = "compras.php";
+  }
 function logout() {
     // Redirige al logout.php para cerrar sesión
-    window.location.href = "php/view/logout.php";
+    window.location.href = "logout.php";
   }

@@ -1,4 +1,11 @@
 <?php
+// session_start();
+
+// // Verificar sesión y rol del usuario
+// if (!isset($_SESSION['user_id']) ) {
+//     header("Location: /pedidos/php/view/login.php");
+//     exit;
+// }
 require_once __DIR__ . '/../controller/DetalleFormaPagoController.php';
 require_once __DIR__ . '/../controller/MonedaController.php';
 require_once __DIR__ . '/../controller/PedidoController.php';
@@ -38,6 +45,9 @@ try {
 
     // Registrar las monedas obtenidas en el debug.log
     file_put_contents('debug.log', "[" . date('Y-m-d H:i:s') . "] Mapeo de monedas: " . print_r($monedaMap, true) . PHP_EOL, FILE_APPEND);
+echo '<pre>';
+    print_r($pagos);
+echo '</pre>';
 
     // Procesar cada pago
     foreach ($pagos as $pago) {
