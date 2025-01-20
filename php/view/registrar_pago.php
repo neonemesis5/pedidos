@@ -45,9 +45,9 @@ try {
 
     // Registrar las monedas obtenidas en el debug.log
     file_put_contents('debug.log', "[" . date('Y-m-d H:i:s') . "] Mapeo de monedas: " . print_r($monedaMap, true) . PHP_EOL, FILE_APPEND);
-echo '<pre>';
-    print_r($pagos);
-echo '</pre>';
+// echo '<pre>';
+//     print_r($pagos);
+// echo '</pre>';
 
     // Procesar cada pago
     foreach ($pagos as $pago) {
