@@ -59,15 +59,17 @@ class DetalleCompraController extends BaseController
      *
      * @param int $facturaCompraId ID de la factura de compra.
      */
-    public function getDetallesByFacturaCompra($facturaCompraId)
+    public function getDetallesByFacturaCompra($facturaCompraId,$standar=null)
     {
+        // print_r($facturaCompraId);
         if (!$facturaCompraId) {
             $this->errorResponse("El ID de la factura de compra es requerido.", 400);
         }
-
         try {
             $detalles = $this->detalleCompraModel->getDetallesByFacturaCompra($facturaCompraId);
-            $this->jsonResponse($detalles);
+            if($standar!=null)
+                return $detalles;
+            return $this->jsonResponse($detalles);
         } catch (Exception $e) {
             $this->errorResponse($e->getMessage(), 500);
         }

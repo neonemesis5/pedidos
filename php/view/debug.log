@@ -1719,3 +1719,24 @@ Datos de movimiento: Array
     [observacion] => Registro desde Kardex
     [status] => A
 )
+addPedido - ID insertado: 123
+Factura creada exitosamente - ID generado: 123
+Factura ID generada: 123
+Insertando detalle: Array
+(
+    [producto_id] => 1001
+    [factcompra_id] => 123
+    [qty] => 23
+    [precioc] => 50
+    [status] => A
+)
+
+addDetalle--Datos recibidos: Array
+(
+    [producto_id] => 1001
+    [factcompra_id] => 123
+    [qty] => 23
+    [precioc] => 50
+    [status] => A
+)
+
