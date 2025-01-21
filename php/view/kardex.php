@@ -2,7 +2,7 @@
 session_start();
 
 // Verificar sesión y rol del usuario
-if (!isset($_SESSION['user_id']) || $_SESSION['rol_id'] != 3) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: /pedidos/php/view/login.php");
     exit;
 }
@@ -104,26 +104,23 @@ if ($tipoSeleccionado) {
         }
         document.addEventListener("DOMContentLoaded", () => {
             const logoutButton = document.getElementById("btnLogout");
-            logoutButton.addEventListener("click", () => {
-                // Redirige al archivo PHP encargado de cerrar la sesión
-                window.location.href = "/pedidos/php/view/logout.php";
-            });
             const btnGuardar = document.getElementById("btnGuardar");
             const ingresoCheckbox = document.getElementById("ingreso");
             const salidaCheckbox = document.getElementById("salida");
+            if (ingresoCheckbox && salidaCheckbox) {
+                ingresoCheckbox.addEventListener("change", () => {
+                    if (ingresoCheckbox.checked) {
+                        salidaCheckbox.checked = false;
+                    }
+                });
 
-            // Asegurar que solo uno de los checkboxes pueda estar seleccionado
-            ingresoCheckbox.addEventListener("change", () => {
-                if (ingresoCheckbox.checked) {
-                    salidaCheckbox.checked = false;
-                }
-            });
+                salidaCheckbox.addEventListener("change", () => {
+                    if (salidaCheckbox.checked) {
+                        ingresoCheckbox.checked = false;
+                    }
+                });
+            }
 
-            salidaCheckbox.addEventListener("change", () => {
-                if (salidaCheckbox.checked) {
-                    ingresoCheckbox.checked = false;
-                }
-            });
 
             btnGuardar.addEventListener("click", () => {
                 const rows = document.querySelectorAll("table tbody tr");

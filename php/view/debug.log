@@ -1695,3 +1695,27 @@ addDetalle--Datos recibidos: Array
 
 [2025-01-20 20:56:17] Estado del pedido actualizado a: C para el pedido ID: 104
 [2025-01-20 20:56:17] Pagos registrados exitosamente.
+Datos recibidos en guardar_kardex.php: Array
+(
+    [tipoProductoId] => 100
+    [tipoOperacion] => 1000
+    [productos] => Array
+        (
+            [0] => Array
+                (
+                    [producto_id] => 1000
+                    [cantidad] => 2
+                )
+
+        )
+
+)
+Diario creado con ID: 100
+Datos de movimiento: Array
+(
+    [producto_id] => 1000
+    [diario_id] => 100
+    [qty] => 2
+    [observacion] => Registro desde Kardex
+    [status] => A
+)

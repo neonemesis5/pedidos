@@ -2,7 +2,7 @@
 session_start();
 
 // Verificar sesión y rol del usuario
-if (!isset($_SESSION['user_id']) || $_SESSION['rol_id'] != 3) {
+if (!isset($_SESSION['user_id'])) {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Acceso no autorizado.']);
     exit;
