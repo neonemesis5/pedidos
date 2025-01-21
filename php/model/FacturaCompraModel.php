@@ -14,17 +14,14 @@ class FacturaCompraModel extends BaseModel
     public function getAllFacturasCompra($status = null, $fecha = null)
     {
         $params[] =!is_null($status)? $status:'A';
-        $params[] =!is_null($fecha) ? $fecha:[];
+        if(!is_null($fecha))
+            $params[] = $fecha;
     
         $q = "SELECT fac.id, pro.nombre as nomprov, mon.nombre as nommoneda ,fac.nrofactura, fac.fecha, fac.total,fac.status
                FROM factura_compra fac
                JOIN moneda mon ON mon.id = fac.moneda_id
                JOIN proveedor pro ON pro.id = fac.proveedor_id
                WHERE fac.status=? ".($fecha!==null?' and fac.fecha::date >= ?':'');
-
-        // echo '<pre>';
-        //     print_r(array($fecha,$q,$params));
-        // echo '</pre>';
         return $this->customQuery($q, $params);
     }
 

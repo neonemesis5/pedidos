@@ -12,6 +12,41 @@ require_once __DIR__ . '/../controller/DetalleCompraController.php';
 $facturaController = new FacturaCompraController();
 $detalleController = new DetalleCompraController();
 
+// Si se solicita el detalle de una factura específica
+if (isset($_GET['detalleFacturaId'])) {
+    $facturaId = $_GET['detalleFacturaId'];
+    $detalles = $detalleController->getDetallesByFacturaCompra($facturaId,true);
+
+    if (!empty($detalles)) {
+    ?>
+    <h3>Detalles de Factura ID: <?php echo htmlspecialchars($facturaId); ?></h3>
+    <table class="facturas-table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+                <?php foreach ($detalles as $detalle) : ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($detalle['producto_nombre']); ?></td>
+                        <td><?php echo htmlspecialchars($detalle['qty']); ?></td>
+                        <td>$<?php echo number_format($detalle['precioc'], 2, ',', '.'); ?></td>
+                        <td>$<?php echo number_format($detalle['total'], 2, ',', '.'); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php 
+    } else {
+        echo "<p>No se encontraron detalles para esta factura.</p>";
+    }
+    exit;
+} 
+
 // Obtener fecha desde GET
 $fecha = $_GET['fecha'] ?? date('Y-m-d');
 
@@ -120,38 +155,3 @@ $facturas = $facturaController->getAllFacturasCompra(null, $fecha);
     }
 </style>
 
-<?php
-// Si se solicita el detalle de una factura específica
-if (isset($_GET['detalleFacturaId'])) {
-    $facturaId = $_GET['detalleFacturaId'];
-    $detalles = $detalleController->getDetallesByFacturaCompra($facturaId,true);
-    
-    ?>
-    <h3>Detalles de Factura ID: <?php echo htmlspecialchars($facturaId); ?></h3>
-    <table class="facturas-table">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($detalles)) : ?>
-                <?php foreach ($detalles as $detalle) : ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($detalle['producto_nombre']); ?></td>
-                        <td><?php echo htmlspecialchars($detalle['qty']); ?></td>
-                        <td>$<?php echo number_format($detalle['precioc'], 2, ',', '.'); ?></td>
-                        <td>$<?php echo number_format($detalle['total'], 2, ',', '.'); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
-                <tr>
-                    <td colspan="4">No se encontraron detalles.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-<?php } ?>
