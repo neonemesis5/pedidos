@@ -80,7 +80,7 @@ class RepkardexModel extends BaseModel {
             $sql .= " AND idpro = :idpro";
             $params['idpro'] = $idProducto;
         }
-    // print_r(array($sql,$params));die;
+    // print_r(array($sql,$params));
         return $this->db->query($sql, $params);
     }
     

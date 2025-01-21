@@ -119,7 +119,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['rol_id'] != 2) {
         <h2>📊 Reportes del Sistema</h2>
         <button onclick="loadReport('diarioformasp.php')">📅 Diario de Dinero</button>
         <button onclick="loadReport('diarioventasprod.php')">🛒 Ventas de Mercancía</button>
-        <button onclick="loadReport('rekardex.php')">📦 Entradas y Salidas</button>
+        <button onclick="loadReport('repkardex2.php')">📦 Entradas y Salidas</button>
         <button onclick="loadReport('repcompras.php')">🛍 Compras Mercancía</button>
         <button onclick="loadReport('repinventario.php')">📑 Inventario</button>
         <button class="logout-btn" onclick="logout()">🚪 Cerrar Sesión</button>

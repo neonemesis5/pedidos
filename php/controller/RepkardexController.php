@@ -84,11 +84,18 @@ class RepkardexController extends BaseController {
      */
     public function getFiltered($filters) {
         try {
+            // echo '<pre>';
+            //     print_r($filters);
+            // echo '</pre>';
+            
             $idOper = $filters['idOper'] ?? null;
             $fechaInicio = $filters['fechaInicio'] ?? null;
             $fechaFin = $filters['fechaFin'] ?? null;
             $idProducto = $filters['idProducto'] ?? null;
             $data = $this->repkardexModel->getFiltered($idOper, $fechaInicio, $fechaFin, $idProducto);
+            // echo '<pre>';
+            //     print_r($data);
+            // echo '</pre>';
             return $data;
         } catch (Exception $e) {
             $this->errorResponse($e->getMessage(), 500);
