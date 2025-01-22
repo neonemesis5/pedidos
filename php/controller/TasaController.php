@@ -41,6 +41,17 @@ class TasaController extends BaseController {
             $this->errorResponse($e->getMessage(), 500);
         }
     }
+    public function getCurrentRates3(){
+        try {
+            return $this->tasaModel->getCurrentMonedasTasas();
+        } catch (Exception $e) {
+            $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    public function insertTasa($data=[]){
+        return $this->tasaModel->insertTasa($data['id'],$data['monto']);
+    }
     /**
      * Obtiene una tasa por su ID.
      *

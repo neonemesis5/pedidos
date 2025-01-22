@@ -42,8 +42,13 @@ class ProductoModel extends BaseModel {
      * @return bool Resultado de la operación.
      */
     public function updateProducto($data, $id) {
+        if (empty($data) || empty($id)) {
+            throw new Exception("Datos e ID son requeridos para actualizar.");
+        }
+    
         return $this->update($this->table, $data, $id);
     }
+    
 
     /**
      * Elimina un producto por su ID.

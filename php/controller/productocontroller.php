@@ -21,7 +21,18 @@ class ProductoController extends BaseController {
             $this->errorResponse($e->getMessage(), 500);
         }
     }
-
+    public function updateProducto($id, $data) {
+        if (empty($id) || empty($data)) {
+            throw new Exception("ID y datos son requeridos para actualizar un producto.");
+        }
+    
+        try {
+            return $this->productoModel->updateProducto($data, $id);
+        } catch (Exception $e) {
+            throw new Exception("Error al actualizar el producto: " . $e->getMessage());
+        }
+    }
+    
     /**
      * Obtiene productos por tipo de producto.
      *

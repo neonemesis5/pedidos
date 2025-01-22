@@ -17,6 +17,9 @@ class TasaModel extends BaseModel {
     public function getCurrentRates(){
         return $this->customQuery("SELECT  ID,concat((SELECT NOMBRE FROM MONEDA WHERE ID=moneda_id1),'_', (SELECT NOMBRE FROM MONEDA WHERE ID=moneda_id2)) as nombre,monto  FROM tasa WHERE status = ?",array('A'));
     }
+    public function getCurrentMonedasTasas(){
+        return $this->customQuery('select * from monedastasa',array());
+    }
 
     /**
      * Obtiene una tasa por su ID.
@@ -57,5 +60,30 @@ class TasaModel extends BaseModel {
      */
     public function deleteTasa($id) {
         return $this->delete($this->table, $id);
+    }
+
+     /**
+     * Inserta una nueva tasa basada en otra existente.
+     *
+     * @param int $id ID de la tasa base.
+     * @param float $monto Nuevo monto para la tasa.
+     * @return bool Resultado de la operación.
+     */
+    public function insertTasa($id, $monto) {
+        $res = $this->getTasaById($id);
+        
+        if (!$res) {
+            return false; // Retorna falso si la tasa base no existe
+        }
+        $this->update($this->table,['status'=>'D'],$id);
+        $data = [
+            'moneda_id1' => $res['moneda_id1'],
+            'moneda_id2' => $res['moneda_id2'],
+            'fecha'      => date('Y-m-d'), // Último día del mes en formato TIMESTAMP
+            'monto'      => $monto,
+            'status'     => 'A'
+        ];
+
+        return $this->insert($this->table, $data);
     }
 }
