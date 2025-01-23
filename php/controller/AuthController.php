@@ -13,16 +13,13 @@ class AuthController extends BaseController {
     public function login($username, $password) {
         // Buscar al usuario por nombre de usuario
         $user = $this->userModel->getUserByUsername($username);
-        // echo '<pre>';
-        //     print_r(array($user,$username,$password));
-        // echo '</pre>';
+
+        // Verificar si el usuario y la contraseña son correctos
         if (!$user || !password_verify($password, $user['password'])) {
             throw new Exception("Usuario o contraseña incorrectos.");
         }
-        
-        
+
         // Iniciar sesión
-        session_start();
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['rol_id'] = $user['rol_id'];
@@ -37,3 +34,4 @@ class AuthController extends BaseController {
         exit;
     }
 }
+?>
