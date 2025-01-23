@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
-
+    // print_r(array($username,$password));
     try {
         // Intentar el login
         $authController->login($username, $password);
@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: repgeneral.php"); // Redirigir al sistema principal
         if( $_SESSION['rol_id'] === 3 )
             header("Location: kardex.php"); // Redirigir al sistema principal
+        if( $_SESSION['rol_id'] === 4 )
+            header("Location: masters.php"); // Redirigir al sistema principal
         exit;
     } catch (Exception $e) {
         $error = $e->getMessage();

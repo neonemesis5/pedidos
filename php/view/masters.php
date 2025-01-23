@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /pedidos/php/view/login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -77,7 +84,7 @@
         <h2>📋 Menú de Maestros</h2>
         <button onclick="loadPage('productosmaster.php')">📦 Productos</button>
         <button onclick="loadPage('tasasmaster.php')">💱 Tasas de Cambio</button>
-        <button onclick="loadPage('usuariosmaster.php')">👥 Usuarios</button>
+        <button onclick="loadPage('usuarios.php')">👥 Usuarios</button>
         <button onclick="loadPage('ingredientesmaster.php')">📊 Estructura de Costo</button>
         <button class="logout-btn" onclick="logout()">🚪 Cerrar Sesión</button>
     </div>
