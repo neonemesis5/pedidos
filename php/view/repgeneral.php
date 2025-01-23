@@ -1,11 +1,11 @@
 <?php
-// session_start();
+session_start();
 
-// // Verificar sesión y rol del usuario
-// if (!isset($_SESSION['user_id']) || $_SESSION['rol_id'] != 2) {
-//     header("Location: /pedidos/php/view/login.php");
-//     exit;
-// }
+// Verificar sesión y rol del usuario
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /pedidos/php/view/login.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -121,7 +121,7 @@
         <button onclick="loadReport('diarioventasprod.php')">🛒 Ventas de Mercancía</button>
         <button onclick="loadReport('repkardex2.php')">📦 Entradas y Salidas</button>
         <button onclick="loadReport('repcompras2.php')">🛍 Compras Mercancía</button>
-        <button onclick="loadReport('repinventario.php')">📑 Inventario</button>
+        <button onclick="loadReport('inventario.php')">📑 Inventario</button>
         <button class="logout-btn" onclick="logout()">🚪 Cerrar Sesión</button>
     </div>
 

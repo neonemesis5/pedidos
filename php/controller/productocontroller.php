@@ -16,7 +16,8 @@ class ProductoController extends BaseController {
     public function getAllProductos() {
         try {
             $productos = $this->productoModel->getAllProductos();
-            $this->jsonResponse($productos);
+            return $productos;
+            // $this->jsonResponse($productos);
         } catch (Exception $e) {
             $this->errorResponse($e->getMessage(), 500);
         }
