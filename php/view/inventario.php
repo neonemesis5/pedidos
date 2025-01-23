@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /pedidos/php/view/login.php");
+    exit;
+}
 require_once __DIR__ . '/../controller/InventarioController.php';
 require_once __DIR__ . '/../controller/ProductoController.php';
 
