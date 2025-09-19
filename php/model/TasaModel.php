@@ -79,7 +79,7 @@ class TasaModel extends BaseModel {
         $data = [
             'moneda_id1' => $res['moneda_id1'],
             'moneda_id2' => $res['moneda_id2'],
-            'fecha'      => date('Y-m-d'), // Último día del mes en formato TIMESTAMP
+            'fecha'      => date('Y-m-d H:i:s'),
             'monto'      => $monto,
             'status'     => 'A'
         ];

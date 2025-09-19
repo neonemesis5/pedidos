@@ -13,6 +13,9 @@ $productoController = new ProductoController();
 $tiposProductos = $tipoProductoController->getAllTiposProductos();
 $tipoProductoId = $_GET['tipoProductoId'] ?? null;
 $productos = $tipoProductoId ? $productoController->getProductosByTipoProducto($tipoProductoId) : [];
+// echo '<pre>';
+// print_r($productos);
+// echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -142,6 +145,7 @@ $productos = $tipoProductoId ? $productoController->getProductosByTipoProducto($
                     <th>Nombre Producto</th>
                     <th>Precio de Venta</th>
                     <th>Estado</th>
+                    <th>Status Kardex</th>
                     <th>Editar</th>
                 </tr>
             </thead>
@@ -152,12 +156,15 @@ $productos = $tipoProductoId ? $productoController->getProductosByTipoProducto($
                         <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
                         <td><?php echo number_format($producto['preciov'], 2, ',', '.'); ?></td>
                         <td><?php echo htmlspecialchars($producto['status']); ?></td>
+                        <td><?php echo htmlspecialchars($producto['status_interno']); ?></td>
+
                         <td>
                             <button class="editar-producto"
                                 data-id="<?php echo $producto['id']; ?>"
                                 data-nombre="<?php echo htmlspecialchars($producto['nombre']); ?>"
                                 data-preciov="<?php echo $producto['preciov']; ?>"
-                                data-status="<?php echo $producto['status']; ?>">
+                                data-status="<?php echo $producto['status']; ?>"
+                                data-status_kardex="<?php echo $producto['status_interno']; ?>">
                                 Editar
                             </button>
                         </td>
@@ -174,12 +181,26 @@ $productos = $tipoProductoId ? $productoController->getProductosByTipoProducto($
             <input type="hidden" id="productoId" name="id">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre">
+            <label for="tipoproducto">Tipo de Productos:</label>
+            <?php echo '<select id="idtipo" name="tipos_productos">';
+
+            foreach ($tiposProductos as $tipoProducto) {
+                echo '<option value="' . $tipoProducto['id'] . '">' . $tipoProducto['nombre'] . '</option>';
+            }
+
+            echo '</select>';
+            ?>
             <label for="preciov">Precio de Venta:</label>
             <input type="number" step="0.01" id="preciov" name="preciov">
             <label for="status">Estado:</label>
             <select id="status" name="status">
                 <option value="A">Activo</option>
                 <option value="I">Inactivo</option>
+            </select>
+            <label for="status_kardex">Status Kardex:</label>
+            <select id="status_kardex" name="status_interno">
+                <option value="A">Activo</option>
+                <option value="O">Oculto</option>
             </select>
             <button type="submit">Guardar Cambios</button>
         </form>
@@ -208,14 +229,19 @@ $productos = $tipoProductoId ? $productoController->getProductosByTipoProducto($
         // Mostrar formulario de edición con datos del producto
         $(document).on("click", ".editar-producto", function() {
             const productoId = $(this).data("id");
+            const idtipo =  $(this).data("idtipo");
             const nombre = $(this).data("nombre");
             const preciov = $(this).data("preciov");
             const status = $(this).data("status");
+            const status_kardex = $(this).data("status_kardex");
+           
 
             $("#productoId").val(productoId);
             $("#nombre").val(nombre);
+            $("#idtipo").val(idtipo);
             $("#preciov").val(preciov);
             $("#status").val(status);
+            $("#status_kardex").val($(this).data("status_kardex"));
         });
 
         // Guardar cambios del producto

@@ -75,7 +75,7 @@ class ProductoModel extends BaseModel {
         $sql = "SELECT pro.id,pro.nombre AS producto, um.nombre AS unidad_medida
                 FROM producto pro
                 JOIN unidades_medida um ON um.id = pro.umedida_id
-                WHERE pro.tipoproducto_id = :tipoproducto_id AND pro.status = 'A'";
+                WHERE pro.tipoproducto_id = :tipoproducto_id AND pro.status_interno = 'A'";
         return $this->customQuery($sql, ['tipoproducto_id' => $tipoProductoId]);
     }
     
